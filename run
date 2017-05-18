@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #import functions
-source ~/Desktop/ubuntu-script-cp2/modules/update
+source tmp/ubuntu-hardening-script-master/modules/update
 
 clear
 
