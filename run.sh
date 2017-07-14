@@ -7,6 +7,8 @@ source ~/ubuntu-hardening-script-master/modules/install.sh
 source ~/ubuntu-hardening-script-master/modules/ssh.sh
 source ~/ubuntu-hardening-script-master/modules/firewall.sh
 source ~/ubuntu-hardening-script-master/modules/wireless.sh
+source ~/ubuntu-hardening-script-master/modules/logins.sh
+source ~/ubuntu-hardening-script-master/modules/vsftpd.sh
 
 clear
 
@@ -37,8 +39,18 @@ read scanq
 clear
 
 echo answer with y/n
-echo -n "secure ssh?"
+echo -n "configure logins?"
+read loginsq
+clear
+
+echo answer with y/n
+echo -n "harden ssh security?"
 read sshq
+clear
+
+echo answer with y/n
+echo -n "harden vsftpd security?"
+read vsftpdq
 clear
 
 #call to functions
@@ -47,4 +59,6 @@ updatef
 ufwf
 wirelessf
 scanf
+logins
 sshf
+vsftpdf

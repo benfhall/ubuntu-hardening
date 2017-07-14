@@ -3,6 +3,7 @@ function ufwf()
 {
 	if echo "$ufwq" | grep -iq "^y" ;then
 		clear
+		
     sudo ufw enable
     echo "enabled/configured firewall"
 	else

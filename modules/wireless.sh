@@ -2,14 +2,32 @@
 function wirelessf()
 {
 	if echo "$wirelessq" | grep -iq "^y" ;then
+		clear
+
     sudo rm -rf etc/NetworkManager/system-connections/ && mkdir etc/NetworkManager/system-connections/
     sudo echo "nospoof on" >> /etc/host.conf
-		sudo echo "disable_functions = exec,system,shell_exec,passthruregister_globals = Off expose_php = Off display_errors = Off track_errors = Offhtml_errors = Off magic_quotes_gpc = Off" >> /etc/php5/apache2/php.ini
-		sudo sed -ie 's/net.ipv6.conf.all.disable_ipv6 = 0/net.ipv6.conf.all.disable_ipv6 = 1/g' /etc/syctl.conf
-		sudo sed -ie 's/net.ipv6.conf.default.disable_ipv6 = 0/net.ipv6.conf.default.disable_ipv6 = 1/g' /etc/syctl.conf
-		sudo sed -ie 's/net.ipv6.conf.lo.disable_ipv6 = 0/net.ipv6.conf.lo.disable_ipv6 = 1/g' /etc/syctl.conf
-		sudo sysctl -p
-		sudo sed -ie 's/ENABLED=1/ENABLED=0/g' /etc/default/irqbalance
+
+		sudo echo "#Added by Swidex's Security Script
+		net.ipv4.icmp_echo_ignore_broadcasts = 1
+		net.ipv4.conf.all.accept_source_route = 0
+		net.ipv6.conf.all.accept_source_route = 0
+		net.ipv4.conf.default.accept_source_route = 0
+		net.ipv6.conf.default.accept_source_route = 0
+		net.ipv4.conf.all.send_redirects = 0
+		net.ipv4.conf.default.send_redirects = 0
+		net.ipv4.tcp_max_syn_backlog = 2048
+		net.ipv4.tcp_synack_retries = 2
+		net.ipv4.tcp_syn_retries = 5
+		net.ipv4.conf.all.log_martians = 1
+		net.ipv4.icmp_ignore_bogus_error_responses = 1
+		net.ipv4.conf.all.accept_redirects = 0
+		net.ipv6.conf.all.accept_redirects = 0
+		net.ipv4.conf.default.accept_redirects = 0
+		net.ipv6.conf.default.accept_redirects = 0
+		net.ipv4.icmp_echo_ignore_all = 1
+		#End of Additions" >> /etc/sysctl.d/10-network-security.conf
+		service procps start
+
 		echo "configured wireless"
 	else
 		clear

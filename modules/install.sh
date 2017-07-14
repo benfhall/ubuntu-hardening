@@ -3,6 +3,7 @@ function installf()
 {
 	if echo "$installq" | grep -iq "^y" ;then
 		clear
+		
     sudo apt-get update
     sudo apt-get instal ufw
     sudo apt-get install gufw

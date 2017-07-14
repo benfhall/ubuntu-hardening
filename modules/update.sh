@@ -2,6 +2,8 @@
 function updatef()
 {
 	if echo "$updateq" | grep -iq "^y" ;then
+		clear
+		
 		sudo apt-get update
 		sudo apt-get upgrade
 		sudo apt-get install unattended-upgrades

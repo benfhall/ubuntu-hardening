@@ -3,6 +3,7 @@ function scan()
 {
 	if echo "$scanq" | grep -iq "^y" ;then
 		clear
+		
 		sudo clamscan -l clamav.log -r /
 		sudo rkhunter --update
 		sudo lynis audit system --quick
