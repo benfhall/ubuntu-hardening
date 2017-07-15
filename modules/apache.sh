@@ -3,8 +3,7 @@ function apachef()
 {
 	if echo "$apacheq" | grep -iq "^y" ;then
 		clear
-
-    sudo apt-get install openssl
+    
     sudo a2enmod rewrite
 
     sudo echo "ServerTokens Prod" >> /etc/apache2/apache2.conf
@@ -35,12 +34,6 @@ function apachef()
       RewriteEngine On
       RewriteCond %{THE_REQUEST} !HTTP/1.1$
       RewriteRule .* - [F]
-    /g' /etc/apache2/apache2.conf
-    sudo sed -i 's/<Directory /var/www>/
-      <Directory /var/www>
-      SSLCertificateFile # Personal Certificate
-      SSLCertificateKeyFile # Key File
-      SSLCACertificateFile # Signer Cert file
     /g' /etc/apache2/apache2.conf
     chmod -R 750
 
