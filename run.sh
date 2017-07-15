@@ -9,6 +9,8 @@ source ~/ubuntu-hardening-script-master/modules/firewall.sh
 source ~/ubuntu-hardening-script-master/modules/wireless.sh
 source ~/ubuntu-hardening-script-master/modules/logins.sh
 source ~/ubuntu-hardening-script-master/modules/vsftpd.sh
+source ~/ubuntu-hardening-script-master/modules/apache.sh
+source ~/ubuntu-hardening-script-master/modules/mysql.sh
 
 clear
 
@@ -53,6 +55,16 @@ echo -n "harden vsftpd security?"
 read vsftpdq
 clear
 
+echo answer with y/n
+echo -n "harden apache security?"
+read apacheq
+clear
+
+echo answer with y/n
+echo -n "harden mysql security?"
+read mysqlq
+clear
+
 #call to functions
 installf
 updatef
@@ -62,3 +74,4 @@ scanf
 logins
 sshf
 vsftpdf
+apachef
