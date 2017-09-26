@@ -1,2 +1,8 @@
 # ubuntu-hardening-script
-script to harden security for ubuntu 14.04
+A quick script to secure ubuntu
+Requirements:
+- Ubuntu
+- Bash
+- Systemd
+
+Edit "ubuntu.cfg" to configure what you need.

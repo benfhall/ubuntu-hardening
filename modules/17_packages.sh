@@ -1,0 +1,22 @@
+function f_packages {
+  echo "[$i] Installing base packages"
+
+  if dmesg | grep -i -E "dmi.*vmware"; then
+    VM="open-vm-tools"
+  fi
+
+  if dmesg | grep -i -E "dmi.*virtualbox"; then
+    VM="virtualbox-guest-dkms virtualbox-guest-utils"
+  fi
+
+  echo "postfix postfix/main_mailer_type select Internet Site" | debconf-set-selections
+  echo "postfix postfix/mailname string $(hostname -f)" | debconf-set-selections
+
+  PACKAGES="acct aide-common apparmor-profiles apparmor-utils auditd debsums haveged libpam-cracklib libpam-tmpdir openssh-server postfix rkhunter $VM"
+
+  for deb in $PACKAGES; do
+       $APT install --no-install-recommends "$deb"
+  done
+
+  ((i++))
+}

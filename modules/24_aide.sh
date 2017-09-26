@@ -1,0 +1,35 @@
+function f_aide {
+  echo "[$i] Aide"
+
+  sed -i 's/^Checksums =.*/Checksums = sha512/' /etc/aide/aide.conf
+
+  ((i++))
+}
+
+function f_aide_post {
+  echo "[$i] Running Aide, this will take a while"
+
+  aideinit --yes
+  cp /var/lib/aide/aide.db.new /var/lib/aide/aide.db
+
+  ((i++))
+}
+
+function f_aide_timer {
+  echo "[$i] Enable daily Aide check"
+
+  cp ./config/aidecheck.service /etc/systemd/system/aidecheck.service
+  cp ./config/aidecheck.timer /etc/systemd/system/aidecheck.timer
+  chmod 0644 /etc/systemd/system/aidecheck.*
+
+  systemctl reenable aidecheck.timer
+  systemctl start aidecheck.timer
+  systemctl daemon-reload
+
+  if [[ $VERBOSE == "Y" ]]; then
+    systemctl status aidecheck.timer --no-pager
+    echo
+  fi
+
+  ((i++))
+}
