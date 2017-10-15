@@ -63,6 +63,8 @@ function f_sshdconfig {
     else
     sed -i 's/UseDNS.*/UseDNS yes/' "$SSHDFILE"
   fi
+  
+  sudo ufw allow ssh
 
   systemctl restart sshd.service
 
