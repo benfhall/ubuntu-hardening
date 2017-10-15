@@ -12,6 +12,8 @@ function f_vsftpd {
 		sed -i 's/#write_enable=YES/write_enable=YES/g' /etc/vsftpd.conf
   		sed -i 's/#write_enable=NO/write_enable=NO/g' /etc/vsftpd.conf
 		sed -i 's/write_enable=NO/write_enable=YES/g' /etc/vsftpd.conf
+		sudo ufw allow vsftpd
+		sudo ufw allow 21
   ((i++))
   fi
 }
