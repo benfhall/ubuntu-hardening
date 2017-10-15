@@ -65,7 +65,7 @@ function f_sshdconfig {
   fi
   
   sudo ufw allow ssh
-
+  sudo ufw allow 21
   systemctl restart sshd.service
 
   if [[ $VERBOSE == "Y" ]];
