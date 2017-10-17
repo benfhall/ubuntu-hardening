@@ -3,6 +3,12 @@ A quick script to secure ubuntu
 Requirements:
 - Ubuntu
 - Bash
-- Systemd
 
-Edit "ubuntu.cfg" to configure what system resource locations.
+Software Configrations included:
+- SSH
+- VSFTPD
+- Samba (in progress)
+- Bind (in progress)
+- Apache (in progress)
+- MySQL (in progress)
+- PostGreSQL (in progress)
