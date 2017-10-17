@@ -5,4 +5,4 @@ Requirements:
 - Bash
 - Systemd
 
-Edit "ubuntu.cfg" to configure what you need.
+Edit "ubuntu.cfg" to configure what system resource locations.
