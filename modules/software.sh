@@ -5,6 +5,7 @@ function f_software {
   sudo apt-get install clamav
   sudo apt-get install rkhunter
   sudo apt-get install zip
+  sudo apt-get install wget
 
   echo "unistall unwanted software"
   sudo apt-get purge john

@@ -6,6 +6,8 @@ source modules/ufw.sh
 source modules/usrmgr.sh
 source modules/ssh.sh
 source modules/ftp.sh
+source modules/apache.sh
+source modules/media.sh
 clear
 
 echo -n "Do you want to update repositories and programs (y/N)? "
@@ -44,3 +46,18 @@ if echo "$answer" | grep -iq "^y" ;then
   f_ftp
 fi
 clear
+
+echo -n "Do you want to configure apache (y/N)? "
+if echo "$answer" | grep -iq "^y" ;then
+  f_apache
+fi
+clear
+
+echo -n "Do you want to remove media files (y/N)? "
+if echo "$answer" | grep -iq "^y" ;then
+  f_media
+fi
+clear
+
+echo "Thank you for running my script! Check the README.md file for information on what it did."
+exit

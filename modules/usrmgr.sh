@@ -2,6 +2,9 @@ function f_usrmgr {
   echo "adding password requirements."
   sudo sed -i 's/sha512/sha512 minlen=8 dcredit=-1 ucredit=-1 ocredit=-1 lcredit=-1/' /etc/pam.d/common-password
 
+  echo "disable guest account"
+  sudo echo "allow-guest=false" >> /etc/lightdm/lightdm.conf
+
   echo "locking users with no password"
   USERS="$(cut -d: -f 1 /etc/passwd)"
   for u in $USERS
