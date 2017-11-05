@@ -1,5 +1,6 @@
 # ubuntu-hardening-script
-A quick script to secure ubuntu
+A quick script to secure ubuntu.
+This is BUILT for CyberPatriots. If you use this on a CyberPatriots competition, it is against Scripting Rules! Use at your own risk!
 Requirements:
 - Ubuntu
 - Bash
