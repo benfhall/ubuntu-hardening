@@ -60,4 +60,6 @@ fi
 clear
 
 echo "Thank you for running my script! Check the README.md file for information on what it did."
+echo "Press any button to exit."
+echo -n
 exit

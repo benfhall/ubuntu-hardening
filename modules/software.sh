@@ -7,7 +7,7 @@ function f_software {
   sudo apt-get install zip
   sudo apt-get install wget
 
-  echo "unistall unwanted software"
+  echo "unistall common unwanted software"
   sudo apt-get purge john
   sudo apt-get purge hydra
   sudo apt-get purge transmission
