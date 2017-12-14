@@ -1,65 +1,30 @@
 #!/bin/bash
-#source modules
-source modules/update.sh
-source modules/software.sh
-source modules/ufw.sh
-source modules/usrmgr.sh
-source modules/ssh.sh
-source modules/ftp.sh
-source modules/apache.sh
-source modules/media.sh
-clear
 
-echo -n "Do you want to update repositories and programs (y/N)? "
-read answer
-if echo "$answer" | grep -iq "^y" ;then
-  f_update
+if ! ps -p $$ | grep -i bash; then
+       echo "Sorry, this script requires bash."
+       exit 1
 fi
-clear
 
-echo -n "Do you want to install/uninstall software (y/N)? "
-if echo "$answer" | grep -iq "^y" ;then
-  f_software
+if ! [ -x "$(which upstart)" ]
+  then
+    echo "upstart required. Exiting."
+    exit 1
 fi
+
 clear
 
-echo -n "Do you want to configure the firewall (y/N)? "
-if echo "$answer" | grep -iq "^y" ;then
-  f_ufw
-fi
-clear
+source ./ubuntu.cfg
 
-echo -n "Do you want to manage users (y/N)? "
-if echo "$answer" | grep -iq "^y" ;then
-  f_usrmgr
-fi
-clear
+for s in ./scripts/[0-9_]*; do
+  [[ -e $s ]] || break
+  source "$s"
+done
 
-echo -n "Do you want to configure ssh (y/N)? "
-if echo "$answer" | grep -iq "^y" ;then
-  f_ssh
-fi
-clear
+f_update
+f_software
+f_ufw
+f_users
+f_network
+f_audit
 
-echo -n "Do you want to configure vsftpd (y/N)? "
-if echo "$answer" | grep -iq "^y" ;then
-  f_ftp
-fi
-clear
-
-echo -n "Do you want to configure apache (y/N)? "
-if echo "$answer" | grep -iq "^y" ;then
-  f_apache
-fi
-clear
-
-echo -n "Do you want to remove media files (y/N)? "
-if echo "$answer" | grep -iq "^y" ;then
-  f_media
-fi
-clear
-
-echo "Thank you for running my script! Check the README.md file for information on what it did."
-echo "Press any button to exit."
-echo -n
-exit
+echo
