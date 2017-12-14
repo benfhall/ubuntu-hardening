@@ -6,13 +6,13 @@
 # Version: 1.0.2
 # PLAT:  linux-64
 
-source ./scripts/update.sh
-source ./scripts/ufw.sh
-source ./scripts/users.sh
-source ./scripts/network.sh
-source ./scripts/audit.sh
-source ./scripts/hosts.sh
-source ./scripts/ssh.sh
+source scripts/update.sh
+source scripts/ufw.sh
+source scripts/users.sh
+source scripts/network.sh
+source scripts/audit.sh
+source scripts/hosts.sh
+source scripts/ssh.sh
 
 clear
 
@@ -23,12 +23,12 @@ echo
 echo -n "Begin Script?"
 read start
 if echo "$start" | grep -iq "^y" ;then
-  f_update
-  f_ufw
-  f_users
-  f_network
-  f_audit
-  f_hosts
+  f_update()
+  f_ufw()
+  f_users()
+  f_network()
+  f_audit()
+  f_hosts()
 
   echo "Ubuntu Hardening Script finished!"
   echo -n "Press any button to exit."

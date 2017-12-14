@@ -1,5 +1,5 @@
 function f_update {
-  echo "[$i] Updating repositories and software"
+  echo "Updating repositories and software"
 
   sudo apt-get install unattended-upgrades
   sudo dpkg-reconfigure -plow unattended-upgrades
