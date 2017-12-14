@@ -30,8 +30,7 @@ if echo "$start" | grep -iq "^y" ;then
   f_audit
   f_hosts
 
-  clear
-
   echo "Ubuntu Hardening Script finished!"
   echo -n "Press any button to exit."
+  echo
 fi
