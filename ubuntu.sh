@@ -6,13 +6,13 @@
 # Version: 1.0.2
 # PLAT:  linux-64
 
-source scripts/update.sh
-source scripts/ufw.sh
-source scripts/users.sh
-source scripts/network.sh
-source scripts/audit.sh
-source scripts/hosts.sh
-source scripts/ssh.sh
+source ./scripts/update.sh
+source ./scripts/ufw.sh
+source ./scripts/users.sh
+source ./scripts/network.sh
+source ./scripts/audit.sh
+source ./scripts/hosts.sh
+source ./scripts/ssh.sh
 
 clear
 
