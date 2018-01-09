@@ -6,3 +6,6 @@ Requirements:
 - Ubuntu 14.04 (Trusty Tahr)
 - Upstart (not systemd)
 - OpenSSH
+
+Additional Resources:
+- https://github.com/Forty-Bot/linux-checklist
