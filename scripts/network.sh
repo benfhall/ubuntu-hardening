@@ -9,5 +9,4 @@ function f_network {
   sudo echo "net.ipv6.conf.lo.disable_ipv6 = 1" >> /etc/sysctl.conf
   sudo sysctl -p
 
-  ((i++))
 }

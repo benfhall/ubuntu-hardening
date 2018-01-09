@@ -1,5 +1,5 @@
 function f_users {
-  echo "[$i] Configuring account settings"
+  echo "Configuring account settings"
 
   sudo sed -i 's/pam.unix.so/pam_unix.so remember=5 difok=3 retry=3 minlen=8 dcredit=-1 ucredit=-1 ocredit=-1 lcredit=-1/' /etc/pam.d/common-password
   sudo echo "auth required pam_tally2.so deny =5 onerr=fail unlock_time=1800" >> /etc/pam.d/common-auth
@@ -21,5 +21,4 @@ function f_users {
     fi
   done
 
-  ((i++))
 }

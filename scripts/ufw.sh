@@ -11,5 +11,4 @@ function f_ufw {
   sudo service enable ufw
   sudo service restart ufw
 
-  ((i++))
 }

@@ -12,5 +12,4 @@ function f_update {
   sudo apt-get autoremove
   sudo apt-get autoclean
 
-  ((i++))
 }

@@ -7,5 +7,4 @@ function f_hosts {
   sudo chmod 644 /etc/hosts.allow
   sudo chmod 644 /etc/hosts.deny
 
-  ((i++))
 }

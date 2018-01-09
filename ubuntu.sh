@@ -1,9 +1,9 @@
 #!/bin/bash
-# Copyright (c) 2012-2016 Ben Hall
+# Copyright (c) 2015-2016 Ben Hall
 # All rights reserved.
 #
 # Name: ubuntu-hardening-script
-# Version: 1.0.2
+# Version: 1.0.3
 # PLAT:  linux-64
 
 source scripts/update.sh

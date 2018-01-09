@@ -19,5 +19,4 @@ function f_audit {
   service enable autitd
   service restart auditd
 
-  ((i++))
 }

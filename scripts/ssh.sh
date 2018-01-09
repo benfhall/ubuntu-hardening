@@ -15,5 +15,4 @@ function f_ssh {
   sudo service enable ssh
   sudo service restart ssh
 
-  ((i++))
 }
