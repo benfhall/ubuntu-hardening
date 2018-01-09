@@ -1,5 +1,5 @@
 function f_ssh {
-  echo "[$i] /etc/ssh/sshd_config"
+  echo "Configuring ssh"
 
   sed -i '/HostKey.*ssh_host_dsa_key.*/d' /etc/ssh/sshd_config
   sed -i 's/.*X11Forwarding.*/X11Forwarding yes/' /etc/ssh/sshd_config

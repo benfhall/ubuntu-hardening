@@ -1,5 +1,5 @@
 function f_network {
-  echo "[$i] Configuring network settings"
+  echo "Configuring network settings"
 
   sudo echo 0 > /proc/sys/net/ipv4/ip_forward
   sudo echo "order bind,hosts" >> /etc/host.conf

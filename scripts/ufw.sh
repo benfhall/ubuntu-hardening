@@ -1,5 +1,5 @@
 function f_ufw {
-  echo "[$i] Configuring firewall"
+  echo "Configuring firewall"
 
   sudo apt-get install ufw -Y
   sudo iptables-save > /etc/network/iptables.rules

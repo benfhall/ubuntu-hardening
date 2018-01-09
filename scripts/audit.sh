@@ -1,5 +1,5 @@
 function f_audit {
-  echo "[$i] Confuring audit settings"
+  echo "Confuring audit settings"
 
   sudo apt-get install auditd -Y
   sudo auditctl -e 1
