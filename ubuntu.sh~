@@ -6,13 +6,13 @@
 # Version: 1.0.3
 # PLAT:  linux-64
 
-./scripts/update.sh
-./scripts/ufw.sh
-./scripts/users.sh
-./scripts/network.sh
-./scripts/audit.sh
-./scripts/hosts.sh
-./scripts/ssh.sh
+source "./scripts/update.sh"
+source "./scripts/ufw.sh"
+source "./scripts/users.sh"
+source "./scripts/network.sh"
+source "./scripts/audit.sh"
+source "./scripts/hosts.sh"
+source "./scripts/ssh.sh"
 
 echo "Ubuntu Hardening Script v.1.0.2"
 echo "Created by Ben Hall"
