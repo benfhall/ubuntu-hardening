@@ -5,6 +5,7 @@
 # Name: ubuntu-hardening-script
 # Version: 1.0.3
 # PLAT:  linux-64
+# PLAT-Version: linux-14.04
 
 source "./scripts/update.sh"
 source "./scripts/ufw.sh"
@@ -14,7 +15,7 @@ source "./scripts/audit.sh"
 source "./scripts/hosts.sh"
 source "./scripts/ssh.sh"
 
-echo "Ubuntu Hardening Script v.1.0.2"
+echo "Ubuntu Hardening Script v.1.0.3 for Ubuntu 14.04"
 echo "Created by Ben Hall"
 echo "Note: Designed for CyberPatriots! Any use within the CyberPatriots competition will disqualify you!"
 echo
