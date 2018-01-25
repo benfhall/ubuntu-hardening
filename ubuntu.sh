@@ -9,15 +9,15 @@
 
 sudo chmod 755 scripts -R #ensure source can access modules
 
-source "scripts/update.sh"
-source "scripts/ufw.sh"
-source "scripts/users.sh"
-source "scripts/network.sh"
-source "scripts/audit.sh"
-source "scripts/hosts.sh"
-source "scripts/ssh.sh"
-source "scripts/perm.sh"
-source "scripts/install.sh"
+source scripts/update.sh
+source scripts/ufw.sh
+source scripts/users.sh
+source scripts/network.sh
+source scripts/audit.sh
+source scripts/hosts.sh
+source scripts/ssh.sh
+source scripts/perm.sh
+source scripts/install.sh
 
 echo "Ubuntu Hardening Script v.1.0.3 for Ubuntu 14.04"
 echo "Created by Ben Hall"
