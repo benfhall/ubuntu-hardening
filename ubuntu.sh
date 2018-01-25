@@ -17,7 +17,6 @@ source scripts/audit.sh
 source scripts/hosts.sh
 source scripts/ssh.sh
 source scripts/perm.sh
-source scripts/install.sh
 
 echo "Ubuntu Hardening Script v.1.0.3 for Ubuntu 14.04"
 echo "Created by Ben Hall"
@@ -27,7 +26,6 @@ echo -n "Begin Script?"
 read start
 if echo "$start" | grep -iq "^y" ;then
   f_update()
-  f_install()
   f_ufw()
   f_perm()
   f_users()
