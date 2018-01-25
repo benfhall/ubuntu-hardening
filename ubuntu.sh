@@ -7,7 +7,7 @@
 # PLAT:  linux-64
 # PLAT-Version: linux-14.04
 
-sudo chmod scripts 775 -r #ensure source can access modules
+sudo chmod 755 scripts -R #ensure source can access modules
 
 source scripts/update.sh
 source scripts/ufw.sh
