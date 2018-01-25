@@ -1,4 +1,4 @@
-function f_hosts {
+function f_install {
   echo "Installing neccessary software"
 
   sudo apt-get install tcpd
