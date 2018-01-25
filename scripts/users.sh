@@ -11,7 +11,6 @@ function f_users {
   sudo echo "PASS_WARN_AGE  7" >> /etc/login.defs
   sudo echo "allow-guest=false" >> /etc/lightdm/lightdm.conf
   sudo passwd -l root
-  sudo chpasswd
 
   USERS="$(cut -d: -f 1 /etc/passwd)" #locking users with no password
   for u in $USERS

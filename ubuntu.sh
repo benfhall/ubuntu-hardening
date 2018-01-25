@@ -25,13 +25,13 @@ echo
 echo -n "Begin Script?"
 read start
 if echo "$start" | grep -iq "^y" ;then
-  f_update()
-  f_ufw()
-  f_perm()
-  f_users()
-  f_network()
-  f_audit()
-  f_hosts()
+  f_update
+  f_install
+  f_ufw
+  f_perm
+  f_users
+  f_network
+  f_hosts
 
   echo "Ubuntu Hardening Script finished!"
   echo -n "Press any button to exit."

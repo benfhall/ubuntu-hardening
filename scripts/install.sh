@@ -1,5 +1,3 @@
-#DISABLED ATM
-
 function f_install {
   echo "Installing neccessary software"
 
