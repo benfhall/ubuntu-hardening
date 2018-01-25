@@ -17,6 +17,7 @@ function f_audit {
   update-grub 2> /dev/null
 
   service enable autitd
+  service auditd reload
   service restart auditd
 
 }
