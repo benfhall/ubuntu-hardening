@@ -23,8 +23,6 @@ echo "Created by Ben Hall"
 echo "Note: Designed sfor CyberPatriots! Any use within the CyberPatriots competition will disqualify you!"
 echo
 
-read start
-
 read -p "Update software and repository? " -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
