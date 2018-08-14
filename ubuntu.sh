@@ -20,7 +20,7 @@ source scripts/perm.sh
 
 echo "Ubuntu Hardening Script v.1.0.3 for Ubuntu 14.04"
 echo "Created by Ben Hall"
-echo "Note: Designed sfor CyberPatriots! Any use within the CyberPatriots competition will disqualify you!"
+echo "Note: Designed for CyberPatriots! Any use within the CyberPatriots competition will disqualify you!"
 echo
 
 read -p "Update software and repository? " -n 1 -r
