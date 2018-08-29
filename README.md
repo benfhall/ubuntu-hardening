@@ -10,3 +10,4 @@ Requirements:
 
 Additional Resources:
 - https://github.com/Forty-Bot/linux-checklist
+- http://bookofzeus.com/harden-ubuntu/
