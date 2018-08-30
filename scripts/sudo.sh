@@ -8,4 +8,3 @@ function f_sudo {
 	sudo echo "%wheel  ALL=(ALL:ALL) ALL" >> /etc/sudoers
 
 }
-
