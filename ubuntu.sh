@@ -14,10 +14,14 @@ source scripts/ufw.sh
 source scripts/users.sh
 source scripts/sysctl.sh
 source scripts/hosts.sh
-source scripts/ssh.sh
 source scripts/perm.sh
+#services
+source scripts/ssh.sh
 source scripts/apache.sh
 source scripts/php.sh
+source scripts/vsftpd.sh
+source scripts/mysql.sh
+source scripts/wordpress.sh
 
 echo "Ubuntu Hardening Script v.1.0.3 for Ubuntu 14.04"
 echo "Created by Ben Hall"
@@ -92,6 +96,13 @@ echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     f_php
+fi
+
+read -p "Configure vsFTPd? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_vsftpd
 fi
 
 echo "Ubuntu Hardening Script finished!"
