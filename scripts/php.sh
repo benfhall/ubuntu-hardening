@@ -74,6 +74,7 @@ function f_php {
   sudo echo "suhosin.post.max_vars = 2048" >> /etc/php5/conf.d/suhosin.ini
   sudo echo "suhosin.request.max_totalname_length = 8192" >> /etc/php5/conf.d/suhosin.ini
   sudo echo "suhosin.request.max_varname_length = 256" >> /etc/php5/conf.d/suhosin.ini
-
+  
+  sudo service apache2 enable
   sudo service apache2 restart
 }
