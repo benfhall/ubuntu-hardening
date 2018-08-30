@@ -41,6 +41,14 @@ function f_ssh {
   sudo echo "LogLevel VERBOSE" >> /etc/ssh/sshd_config
   sudo sed -i 's/.*StrictModes.*//' /etc/ssh/sshd_config
   sudo echo "StrictModes yes" >> /etc/ssh/sshd_config
+  sudo sed -i "s/#MaxAuthTries 6//" /etc/ssh/sshd_config
+  sudo echo "MaxAuthTries 3" >> /etc/ssh/sshd_config
+  sudo sed -i "s/#Port 22/Port 6211/g" /etc/ssh/sshd_config
+
+
+  sudo iptables -I INPUT -p tcp --dport 6211 -i eth0 -m state --state NEW -m recent --set
+  sudo iptables -I INPUT -p tcp --dport 6211 -i eth0 -m state --state NEW -m recent --update --seconds 60 --hitcount 5 -j DROP
+  iptables-save > /root/my.active.firewall.rules
 
   sudo service enable ssh
   sudo service restart ssh

@@ -16,9 +16,15 @@ source scripts/sysctl.sh
 source scripts/hosts.sh
 source scripts/ssh.sh
 source scripts/perm.sh
+source scripts/cron.sh
 source scripts/apache.sh
 source scripts/php.sh
 source scripts/vsftpd.sh
+source scripts/audit.sh
+source scripts/rkhunter.sh
+source scripts/banners.sh
+source scripts/sudo.sh
+source scripts/nginx.sh
 
 echo "Ubuntu Hardening Script v.1.0.3 for Ubuntu 14.04"
 echo "Created by Ben Hall"
@@ -74,6 +80,20 @@ then
     f_hosts
 fi
 
+read -p "Configuring cron? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_cron
+fi
+
+read -p "Configure audit? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_audit
+fi
+
 read -p "Configure ssh? " -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
@@ -100,6 +120,34 @@ echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     f_php
+fi
+
+read -p "Configure nginx? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_nginx
+fi
+
+read -p "Run RKHunter? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_rkhunter
+fi
+
+read -p "Edit banners? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_banners
+fi
+
+read -p "Configure sudo? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_sudo
 fi
 
 echo "Ubuntu Hardening Script finished!"

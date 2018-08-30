@@ -11,3 +11,4 @@ Requirements:
 Additional Resources:
 - https://github.com/Forty-Bot/linux-checklist
 - http://bookofzeus.com/harden-ubuntu/
+- https://github.com/maldevel/blue-team/tree/master/hardening

@@ -12,6 +12,10 @@ function f_vsftpd {
   sudo sed -i 's/ftpd_banner=.*//' /etc/vsftpd.conf
   sudo echo "ftpd_banner=Secure FTP Server" >> /etc/vsftpd.conf
 
+  sudo iptables -I INPUT -p tcp --dport 20 -i eth0 -m state --state NEW -m recent --set
+  sudo iptables -I INPUT -p tcp --dport 20 -i eth0 -m state --state NEW -m recent --update --seconds 60 --hitcount 5 -j DROP
+  iptables-save > /root/my.active.firewall.rules
+
   sudo service enable vsftpd
   sudo service restart vsftpd
 
