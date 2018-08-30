@@ -18,6 +18,7 @@ source scripts/ssh.sh
 source scripts/perm.sh
 source scripts/apache.sh
 source scripts/php.sh
+source scripts/vsftpd.sh
 
 echo "Ubuntu Hardening Script v.1.0.3 for Ubuntu 14.04"
 echo "Created by Ben Hall"
@@ -88,6 +89,13 @@ then
 fi
 
 read -p "Configure PHP? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_php
+fi
+
+read -p "Configure vsFTPd? " -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
