@@ -37,8 +37,9 @@ function f_audit {
     sudo echo "-a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate \ -F exit=-EPERM -F auid>=500 -F auid!=4294967295 -k access" >> /etc/audit/audit.rules
     sudo echo "-a always,exit -F arch=b64 -S mount -F auid>=500 -F auid!=4294967295 -k mounts" >> /etc/audit/audit.rules
     sudo echo "-a always,exit -F arch=b32 -S mount -F auid>=500 -F auid!=4294967295 -k mounts" >> /etc/audit/audit.rules
-    sudo echo "" >> /etc/audit/audit.rules
-    sudo echo "" >> /etc/audit/audit.rules
+    sudo echo "-a always,exit -F arch=b64 -S unlink -S unlinkat -S rename -S renameat -F auid>=500 \ -F auid!=4294967295 -k delete" >> /etc/audit/audit.rules
+    sudo echo "-a always,exit -F arch=b32 -S unlink -S unlinkat -S rename -S renameat -F auid>=500 \ -F auid!=4294967295 -k delete" >> /etc/audit/audit.rules
+    sudo echo "-a always,exit -F arch=b64 -S init_module -S delete_module -k modules" >> /etc/audit/audit.rules
   else
     sudo echo "-a always,exit -F arch=b32 -S adjtimex -S settimeofday -S stime -k time-change" >> /etc/audit/audit.rules
     sudo echo "-a always,exit -F arch=b32 -S clock_settime -k time-change" >> /etc/audit/audit.rules
@@ -54,6 +55,8 @@ function f_audit {
     sudo echo "-a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate \ -F exit=-EACCES -F auid>=500 -F auid!=4294967295 -k access" >> /etc/audit/audit.rules
     sudo echo "-a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate \ -F exit=-EPERM -F auid>=500 -F auid!=4294967295 -k access" >> /etc/audit/audit.rules
     sudo echo "-a always,exit -F arch=b32 -S mount -F auid>=500 -F auid!=4294967295 -k mounts" >> /etc/audit/audit.rules
+    sudo echo "-a always,exit -F arch=b32 -S unlink -S unlinkat -S rename -S renameat -F auid>=500 \ -F auid!=4294967295 -k delete" >> /etc/audit/audit.rules
+    sudo echo "-a always,exit -F arch=b32 -S init_module -S delete_module -k modules" >> /etc/audit/audit.rules
   fi
 
   sudo echo "-w /etc/group -p wa -k identity" >> /etc/audit/audit.rules
@@ -68,6 +71,12 @@ function f_audit {
   sudo echo "-w /var/run/utmp -p wa -k session" >> /etc/audit/audit.rules
   sudo echo "-w /var/log/wtmp -p wa -k session" >> /etc/audit/audit.rules
   sudo echo "-w /var/log/btmp -p wa -k session " >> /etc/audit/audit.rules
+  sudo echo "-w /etc/sudoers -p wa -k scope" >> /etc/audit/audit.rules
+  sudo echo "-w /var/log/sudo.log -p wa -k actions" >> /etc/audit/audit.rules
+  sudo echo "-w /sbin/insmod -p x -k modules" >> /etc/audit/audit.rules
+  sudo echo "-w /sbin/rmmod -p x -k modules" >> /etc/audit/audit.rules
+  sudo echo "-w /sbin/modprobe -p x -k modules" >> /etc/audit/audit.rules
+  sudo echo "-e 2" >> /etc/audit/audit.rules
 
   sudo pkill -P 1-HUP auditd
 

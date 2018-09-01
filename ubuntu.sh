@@ -25,6 +25,8 @@ source scripts/rkhunter.sh
 source scripts/banners.sh
 source scripts/sudo.sh
 source scripts/nginx.sh
+source scripts/process.sh
+source scripts/aide.sh
 
 echo "Ubuntu Hardening Script v.1.0.3 for Ubuntu 14.04"
 echo "Created by Ben Hall"
@@ -148,6 +150,20 @@ echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     f_sudo
+fi
+
+read -p "Harden processes? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_process
+fi
+
+read -p "Configure AIDE? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_aide
 fi
 
 echo "Ubuntu Hardening Script finished!"
