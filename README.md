@@ -12,3 +12,4 @@ Additional Resources:
 - https://github.com/Forty-Bot/linux-checklist
 - http://bookofzeus.com/harden-ubuntu/
 - https://github.com/maldevel/blue-team/tree/master/hardening
+- https://security.uri.edu/files/CIS_Ubuntu_14.04_LTS_Server_Benchmark_v1.0.0.pdf
