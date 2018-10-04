@@ -16,6 +16,7 @@ source scripts/sysctl.sh
 source scripts/hosts.sh
 source scripts/ssh.sh
 source scripts/perm.sh
+source scripts/install.sh
 source scripts/cron.sh
 source scripts/apache.sh
 source scripts/php.sh
