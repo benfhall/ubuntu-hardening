@@ -1,4 +1,7 @@
 # ubuntu14.04-hardening-script
+
+NOW DEPRECATED!!! Will no longer be updating. Latest updates will be for 16.04
+
 A script to secure Ubuntu 14.04 and several services.
 This is BUILT for CyberPatriots. If you use this on a CyberPatriots competition, it is against Scripting Rules! Use at your own risk!
 NOTE: RUN WITH BASH, NOT SH (ex. sudo bash ubuntu.sh)
