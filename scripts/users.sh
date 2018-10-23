@@ -11,10 +11,6 @@ function f_users {
   sudo echo "PASS_WARN_AGE  7" >> /etc/login.defs
   sudo echo "allow-guest=false" >> /etc/lightdm/lightdm.conf
   sudo passwd -l root
-  sudo usermod -g 0 root
-  sudo sed -i "s/UMASK.*022/UMASK   077/" /etc/login.defs
-  sudo sed -i "s/#.*umask.*022/umask 077/" /root/.bashrc
-  sudo useradd -D -f 30
 
   sudo sed -i 's/exec shutdown -r now “Control-Alt-Delete pressed”//' /etc/init/control-alt-delete.conf
 
