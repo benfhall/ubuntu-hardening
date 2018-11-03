@@ -9,7 +9,7 @@ function f_sysctl {
   sudo sysctl -w net.ipv4.conf.default.rp_filter=1
 
   # Ignore ICMP broadcast requests
-  sudo sysctl -wnet.ipv4.icmp_echo_ignore_broadcasts=1
+  sudo sysctl -w net.ipv4.icmp_echo_ignore_broadcasts=1
 
   # Disable source packet routing
   sudo sysctl -w net.ipv4.conf.all.accept_source_route=0
@@ -45,10 +45,6 @@ function f_sysctl {
 
   # Log packets with impossible addresses to kernel log? yes
   sudo sysctl -w net.ipv4.conf.default.secure_redirects=0
-
-  #Enable ExecShield protection
-  kernel.exec-shield=1
-  kernel.randomize_va_space=1
 
   ########## IPv6 networking start ##############
   # Number of Router Solicitations to send until assuming no routers are present.
