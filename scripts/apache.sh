@@ -48,7 +48,7 @@ function f_apache {
   sudo iptables -I INPUT -p tcp --dport 80 -i eth0 -m state --state NEW -m recent --update --seconds 60 --hitcount 5 -j DROP
   iptables-save > /root/my.active.firewall.rules
 
-  sudo service enable apache2
-  sudo service restart apache2
+  sudo service apache2 enable
+  sudo service apache2 restart
 
 }
