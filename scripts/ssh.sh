@@ -21,15 +21,15 @@ function f_ssh {
   sudo echo "ClientAliveInterval 300" >> /etc/ssh/sshd_config
   sudo sed -i 's/.*ClientAliveCountMax.*//' /etc/ssh/sshd_config
   sudo echo "ClientAliveCountMax 0" >> /etc/ssh/sshd_config
-  sudo sed -i 's/.*IgnoreRhosts.*//' /etc/ssh/_sshd_config
+  sudo sed -i 's/.*IgnoreRhosts.*//' /etc/ssh/sshd_config
   sudo echo "IgnoreRhosts yes" >> /etc/ssh/sshd_config
-  sudo sed -i 's/.*RhostsAuthentication.*//' /etc/ssh/_sshd_config
+  sudo sed -i 's/.*RhostsAuthentication.*//' /etc/ssh/sshd_config
   sudo echo "RhostsAuthentication no" >> /etc/ssh/sshd_config
-  sudo sed -i 's/.*RhostsRSAAuthentication.*//' /etc/ssh/_sshd_config
+  sudo sed -i 's/.*RhostsRSAAuthentication.*//' /etc/ssh/sshd_config
   sudo echo "RhostsRSAAuthentication no" >> /etc/ssh/sshd_config
-  sudo sed -i 's/.*RSAAuthentication.*//' /etc/ssh/_sshd_config
+  sudo sed -i 's/.*RSAAuthentication.*//' /etc/ssh/sshd_config
   sudo echo "RSAAuthentication yes" >> /etc/ssh/sshd_config
-  sudo sed -i 's/.*HostbasedAuthentication.*//' /etc/ssh/_sshd_config
+  sudo sed -i 's/.*HostbasedAuthentication.*//' /etc/ssh/sshd_config
   sudo echo "HostbasedAuthentication no" >> /etc/ssh/sshd_config
   sudo sed -i 's/.*LoginGraceTime.*//' /etc/ssh/sshd_config
   sudo echo "LoginGraceTime 20" >> /etc/ssh/sshd_config
@@ -50,7 +50,7 @@ function f_ssh {
   sudo iptables -I INPUT -p tcp --dport 6211 -i eth0 -m state --state NEW -m recent --update --seconds 60 --hitcount 5 -j DROP
   iptables-save > /root/my.active.firewall.rules
 
-  sudo service enable ssh
-  sudo service restart ssh
+  sudo service ssh enable
+  sudo service ssh restart
 
 }
