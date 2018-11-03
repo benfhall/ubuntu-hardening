@@ -9,20 +9,17 @@
 
 sudo chmod 755 scripts -R #ensure source can access modules
 
-source scripts/update.sh
 source scripts/ufw.sh
 source scripts/users.sh
 source scripts/sysctl.sh
 source scripts/hosts.sh
 source scripts/ssh.sh
 source scripts/perm.sh
-source scripts/install.sh
 source scripts/cron.sh
 source scripts/apache.sh
 source scripts/php.sh
 source scripts/vsftpd.sh
 source scripts/audit.sh
-source scripts/rkhunter.sh
 source scripts/banners.sh
 source scripts/sudo.sh
 source scripts/nginx.sh
@@ -34,19 +31,6 @@ echo "Created by Ben Hall"
 echo "Note: Designed for CyberPatriots! Any use within the CyberPatriots competition will disqualify you!"
 echo
 
-read -p "Update software and repository? " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    f_update
-fi
-
-read -p "Install needed software? " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    f_install
-fi
 
 read -p "Configure the firewall? " -n 1 -r
 echo
@@ -130,13 +114,6 @@ echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     f_nginx
-fi
-
-read -p "Run RKHunter? " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    f_rkhunter
 fi
 
 read -p "Edit banners? " -n 1 -r
