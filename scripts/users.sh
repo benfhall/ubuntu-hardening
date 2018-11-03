@@ -12,14 +12,6 @@ function f_users {
   sudo echo "allow-guest=false" >> /etc/lightdm/lightdm.conf
   sudo passwd -l root
 
-  sudo sed -i 's/exec shutdown -r now “Control-Alt-Delete pressed”//' /etc/init/control-alt-delete.conf
-
-  sed -i 's/^#KillUserProcesses=no/KillUserProcesses=1/' /etc/systemd/logind.conf
-  sed -i 's/^#KillExcludeUsers=root/KillExcludeUsers=root/' /etc/systemd/logind.conf
-  sed -i 's/^#IdleAction=ignore/IdleAction=lock/' /etc/systemd/logind.conf
-  sed -i 's/^#IdleActionSec=30min/IdleActionSec=15min/' /etc/systemd/logind.conf
-  sed -i 's/^#RemoveIPC=yes/RemoveIPC=yes/' /etc/systemd/logind.conf
-
   USERS="$(cut -d: -f 1 /etc/passwd)" #locking users with no password
   for u in $USERS
   do
