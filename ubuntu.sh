@@ -67,13 +67,6 @@ then
     f_hosts
 fi
 
-read -p "Configuring cron? " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    f_cron
-fi
-
 read -p "Configure audit? " -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
