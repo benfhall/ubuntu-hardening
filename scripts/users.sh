@@ -1,14 +1,9 @@
 function f_users {
   echo "Configuring account settings"
 
-  sudo sed -i 's/pam.unix.so/pam_unix.so remember=5 difok=3 retry=3 minlen=8 dcredit=-1 ucredit=-1 ocredit=-1 lcredit=-1/' /etc/pam.d/common-password
-  sudo echo "auth required pam_tally2.so deny=5 onerr=fail unlock_time=1800" >> /etc/pam.d/common-auth
-  sudo sed -i 's/PASS_MAX_DAYS/#PASS_MAX_DAYS/' /etc/login.defs
-  sudo sed -i 's/PASS_MIN_DAYS/#PASS_MIN_DAYS/' /etc/login.defs
-  sudo sed -i 's/PASS_WARN_AGE/#PASS_WARN_AGE/' /etc/login.defs
-  sudo echo "PASS_MAX_DAYS  90" >> /etc/login.defs
-  sudo echo "PASS_MIN_DAYS  14" >> /etc/login.defs
-  sudo echo "PASS_WARN_AGE  7" >> /etc/login.defs
+  sudo cp ~/ubuntu-hardening/defaults/common-password /etc/pam.d
+  sudo cp ~/ubuntu-hardening/defaults/common-auth /etc/pam.d
+  sudo cp ~/ubuntu-hardening/defaults/login.defs /etc
   sudo echo "allow-guest=false" >> /etc/lightdm/lightdm.conf
   sudo passwd -l root
 
