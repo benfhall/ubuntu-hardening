@@ -39,13 +39,6 @@ then
     f_ufw
 fi
 
-read -p "Configure permissions? " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    f_perm
-fi
-
 read -p "Configure account settings? " -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
@@ -53,18 +46,18 @@ then
     f_users
 fi
 
-read -p "Configure sysctl? " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    f_sysctl
-fi
-
 read -p "Configure hosts file? " -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     f_hosts
+fi
+
+read -p "Configure sysctl? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_sysctl
 fi
 
 read -p "Configure audit? " -n 1 -r
@@ -135,6 +128,13 @@ echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     f_aide
+fi
+
+read -p "Configure permissions? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_perm
 fi
 
 echo "Ubuntu Hardening Script finished!"
