@@ -6,7 +6,7 @@ function f_ufw {
   sudo ufw reset
   sudo ufw enable
 
-  sudo service ufw enable 
+  sudo service ufw enable
   sudo service ufw restart
 
 }

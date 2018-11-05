@@ -67,41 +67,6 @@ then
     f_audit
 fi
 
-read -p "Configure ssh? " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    f_ssh
-fi
-
-read -p "Configure apache? " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    f_apache
-fi
-
-read -p "Configure PHP? " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    f_php
-fi
-
-read -p "Configure vsFTPd? " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    f_php
-fi
-
-read -p "Configure nginx? " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    f_nginx
-fi
-
 read -p "Edit banners? " -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
@@ -135,6 +100,13 @@ echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     f_perm
+fi
+
+read -p "Configure/Uninstall services? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_service
 fi
 
 echo "Ubuntu Hardening Script finished!"
