@@ -13,18 +13,14 @@ source scripts/ufw.sh
 source scripts/users.sh
 source scripts/sysctl.sh
 source scripts/hosts.sh
-source scripts/ssh.sh
 source scripts/perm.sh
 source scripts/cron.sh
-source scripts/apache.sh
-source scripts/php.sh
-source scripts/vsftpd.sh
 source scripts/audit.sh
 source scripts/banners.sh
 source scripts/sudo.sh
-source scripts/nginx.sh
 source scripts/process.sh
 source scripts/aide.sh
+source scripts/php.sh
 
 echo "Ubuntu Hardening Script v.1.0.3 for Ubuntu 14.04"
 echo "Created by Ben Hall"
@@ -65,6 +61,13 @@ echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     f_audit
+fi
+
+read -p "Configure PHP? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_php
 fi
 
 read -p "Edit banners? " -n 1 -r

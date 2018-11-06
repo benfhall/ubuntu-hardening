@@ -1,3 +1,5 @@
+source ~/ubuntu-hardening/readme.cfg
+
 function f_users {
   echo "Configuring account settings"
 
@@ -6,6 +8,8 @@ function f_users {
   sudo cp ~/ubuntu-hardening/defaults/login.defs /etc
   sudo echo "allow-guest=false" >> /etc/lightdm/lightdm.conf
   sudo passwd -l root
+
+  sudo passwd -l $
 
   USERS="$(cut -d: -f 1 /etc/passwd)" #locking users with no password
   for u in $USERS
