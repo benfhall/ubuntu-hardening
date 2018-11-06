@@ -9,7 +9,39 @@ function f_users {
   sudo echo "allow-guest=false" >> /etc/lightdm/lightdm.conf
   sudo passwd -l root
 
-  sudo passwd -l $
+  ls /home > ~/ubuntu-hardening/users.cfg
+  cat users.cfg | tr '\n' ' ' > users_clean.conf
+  ALLUSERS=`cat users_clean.cfg`
+
+  for u in $ALLUSERS
+  do
+    if [[ $DESIREDUSERS =~ .*$u.* ]]
+    then
+      echo
+    else
+      sudo deluser -r $u
+    fi
+  done
+
+  for u in $SIMPLEPASSWD
+  do
+    sudo passwd -l $u
+  done
+
+  > ~/ubuntu-hardening/sudoers.cfg
+  getent group sudo | cut -d: -f4 >> ~/ubuntu-hardening/sudoers.cfg
+  sudo sed -i 's/, /g' sudoers.cfg
+  ALLADMINS=`cat sudoers.cfg`
+
+  for u in $ALLADMINS
+  do
+    if [[ $DESIREDADMINS =~ .*$u.* ]]
+    then
+      sudo usermod -a -G sudo $u
+    else
+      sudo gpasswd -d $u sudo
+    fi
+  done
 
   USERS="$(cut -d: -f 1 /etc/passwd)" #locking users with no password
   for u in $USERS
