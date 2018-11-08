@@ -10,7 +10,7 @@
 sudo chmod 755 scripts -R #ensure source can access modules
 
 source services.sh
-source scripts/update.sh
+source scripts/apt.sh
 source scripts/ufw.sh
 source scripts/users.sh
 source scripts/sysctl.sh
@@ -29,11 +29,11 @@ echo "Created by Ben Hall"
 echo "Note: Designed for CyberPatriots! Any use within the CyberPatriots competition will disqualify you!"
 echo
 
-read -p "Configure/Install updates? " -n 1 -r
+read -p "Configure/Install apt? " -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-    f_update
+    f_apt
 fi
 
 read -p "Configure the firewall? " -n 1 -r
