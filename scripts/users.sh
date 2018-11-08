@@ -10,7 +10,7 @@ function f_users {
   sudo passwd -l root
 
   ls /home > ~/ubuntu-hardening/users.cfg
-  cat users.cfg | tr '\n' ' ' > users_clean.conf
+  cat users.cfg | tr '\n' ' ' > users_clean.cfg
   ALLUSERS=`cat users_clean.cfg`
 
   for u in $ALLUSERS
@@ -19,7 +19,7 @@ function f_users {
     then
       echo
     else
-      sudo deluser -r $u
+      sudo deluser $u
     fi
   done
 
@@ -30,7 +30,7 @@ function f_users {
 
   > ~/ubuntu-hardening/sudoers.cfg
   getent group sudo | cut -d: -f4 >> ~/ubuntu-hardening/sudoers.cfg
-  sudo sed -i 's/, /g' sudoers.cfg
+  sudo sed -i 's/,/ /g' sudoers.cfg
   ALLADMINS=`cat sudoers.cfg`
 
   for u in $ALLADMINS
