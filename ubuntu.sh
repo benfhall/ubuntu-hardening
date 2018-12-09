@@ -9,7 +9,6 @@
 
 sudo chmod 755 scripts -R #ensure source can access modules
 
-source services.sh
 source scripts/apt.sh
 source scripts/ufw.sh
 source scripts/users.sh
@@ -23,6 +22,11 @@ source scripts/sudo.sh
 source scripts/process.sh
 source scripts/aide.sh
 source scripts/php.sh
+source scripts/apache.sh
+source scripts/vsftpd.sh
+source scripts/ssh.sh
+source scripts/nginx.sh
+source scripts/samba.sh
 
 echo "Ubuntu Hardening Script v.1.0.3 for Ubuntu 14.04"
 echo "Created by Ben Hall"
@@ -113,11 +117,32 @@ then
     f_perm
 fi
 
-read -p "Configure/Uninstall services? " -n 1 -r
+read -p "Configure SSH" -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-    f_service
+    f_ssh
+fi
+
+read -p "Configure vsFTPd" -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_vsftpd
+fi
+
+read -p "Configure Apache" -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_apache
+fi
+
+read -p "Configure nginx" -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_nginx
 fi
 
 echo "Ubuntu Hardening Script finished!"
