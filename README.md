@@ -14,9 +14,15 @@ Additional Resources:
 - http://bookofzeus.com/harden-ubuntu/
 - https://github.com/maldevel/blue-team/tree/master/hardening
 - https://security.uri.edu/files/CIS_Ubuntu_14.04_LTS_Server_Benchmark_v1.0.0.pdf
+- https://www.alibabacloud.com/help/faq-list/60787.htm
 
 Simple Checklist:
 - Remove unwanted software
 - Set updates to daily, notify, and immediate
 - Delete media files
 - Look at open ports
+
+WiP:
+- Nginx configuration script
+- Samba configuration script
+-

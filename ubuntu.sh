@@ -27,6 +27,8 @@ source scripts/vsftpd.sh
 source scripts/ssh.sh
 source scripts/nginx.sh
 source scripts/samba.sh
+source scripts/pureftpd.sh
+source scripts/purge.sh
 
 echo "Ubuntu Hardening Script v.1.0.3 for Ubuntu 14.04"
 echo "Created by Ben Hall"
@@ -103,18 +105,25 @@ then
     f_process
 fi
 
-read -p "Configure AIDE? " -n 1 -r
+read -p "Configure AIDE?" -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     f_aide
 fi
 
-read -p "Configure permissions? " -n 1 -r
+read -p "Configure permissions?" -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     f_perm
+fi
+
+read -p "Uninstall malicious software?" -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_malware
 fi
 
 read -p "Configure SSH" -n 1 -r
@@ -122,6 +131,8 @@ echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     f_ssh
+  else
+    sudo apt-get purge openssh-server
 fi
 
 read -p "Configure vsFTPd" -n 1 -r
@@ -129,21 +140,44 @@ echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     f_vsftpd
+  else
+    sudo apt-get purge vsftpd
 fi
 
-read -p "Configure Apache" -n 1 -r
+read -p "Configure pure-ftpd?" -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_pureftpd
+  else
+    sudo apt-get purge pure-ftpd
+fi
+
+read -p "Configure samba?" -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_samba
+  else
+    sudo apt-get purge samba
+fi
+
+read -p "Configure Apache?" -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     f_apache
+  else
+    sudo apt-get purge apache2
 fi
 
-read -p "Configure nginx" -n 1 -r
+read -p "Purge vulnerable software??" -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-    f_nginx
+  f_purge
 fi
+
 
 echo "Ubuntu Hardening Script finished!"
 echo -n "Press any button to exit."
