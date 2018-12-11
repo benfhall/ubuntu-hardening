@@ -1,4 +1,4 @@
-function f_audit {
+function f_filemgt {
   echo "Managing file system"
 
   sudo find /home -iname "*.mp3" -delete

@@ -11,5 +11,9 @@ function f_purge {
   sudo sed -i 's/.*tftp/#tftp/' /etc/inetd.d/*
   sudo sed -i 's/.*start/#start/' /etc/init/xinetd.conf
   sudo apt-get remove openbsd-inetd
+  sudo apt-get remove avahi-daemon avahi
+  sudo apt-get remove cups
+  sudo apt-get remove rpcbind
+  sudo apt-get purge wesnoth
 
 }

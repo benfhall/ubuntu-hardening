@@ -29,6 +29,10 @@ source scripts/nginx.sh
 source scripts/samba.sh
 source scripts/pureftpd.sh
 source scripts/purge.sh
+source scripts/malware.sh
+source scripts/filemgt.sh
+source scripts/apparmor.sh
+
 
 echo "Ubuntu Hardening Script v.1.0.3 for Ubuntu 14.04"
 echo "Created by Ben Hall"
@@ -63,6 +67,13 @@ then
     f_hosts
 fi
 
+read -p "Manage file system? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_filemgt
+fi
+
 read -p "Configure sysctl? " -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
@@ -82,6 +93,13 @@ echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     f_php
+fi
+
+read -p "Configure apparmor? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_apparmor
 fi
 
 read -p "Edit banners? " -n 1 -r
