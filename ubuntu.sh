@@ -189,6 +189,27 @@ then
     sudo apt-get purge apache2
 fi
 
+read -p "Uninstall nginx?" -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    sudo apt-get purge nginx
+fi
+
+read -p "Uninstall bind9?" -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    sudo apt-get purge bind9
+fi
+
+read -p "Uninstall postfix?" -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    sudo apt-get purge postfix
+fi
+
 read -p "Purge vulnerable software??" -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
