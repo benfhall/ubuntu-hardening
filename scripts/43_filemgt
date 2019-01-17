@@ -1,0 +1,13 @@
+function f_filemgt {
+  echo "[$SCRIPT_COUNT] Managing file system"
+
+  sudo find /home -iname "*.mp3" -delete
+  sudo find /home -iname "*.jpg" -delete
+  sudo find /home -iname "*.png" -delete
+  sudo find /home -iname "*.mp4" -delete
+
+  echo
+
+  ((SCRIPT_COUNT++))
+
+}

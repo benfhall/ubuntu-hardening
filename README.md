@@ -5,7 +5,7 @@ This is BUILT for CyberPatriots. If you use this on a CyberPatriots competition,
 NOTE: RUN WITH BASH, NOT SH (ex. sudo bash ubuntu.sh)
 
 Requirements:
-- Ubuntu 14.04 (Trusty Tahr)
+- Ubuntu 16.04 (Trusty Tahr)
 - Upstart (not systemd)
 - OpenSSH
 
