@@ -1,113 +1,223 @@
 #!/bin/bash
-# shellcheck disable=2009
+# Copyright (c) 2015-2016 Ben Hall
+# All rights reserved.
+#
+# Name: ubuntu-hardening-scriptst
+# Version: 1.0.3
+# PLAT:  linux-64
+# PLAT-Version: linux-14.04
 
-function main {
-  clear
-  source ./ubuntu.cfg
-  readonly FW_ADMIN
-  readonly SSH_GRPS
-  readonly SYSCTL_CONF
-  readonly AUDITD_MODE
-  readonly AUDITD_RULES
-  readonly LOGROTATE_CONF
-  readonly NTPSERVERPOOL
-  readonly TIMEDATECTL
-  readonly VERBOSE
-  readonly CHANGEME
-  readonly ADDUSER
-  readonly AUDITDCONF
-  readonly AUDITRULES
-  readonly COMMONPASSWD
-  readonly COMMONACCOUNT
-  readonly COMMONAUTH
-  readonly COREDUMPCONF
-  readonly DEFAULTGRUB
-  readonly DISABLEMNT
-  readonly DISABLEMOD
-  readonly DISABLENET
-  readonly JOURNALDCONF
-  readonly LIMITSCONF
-  readonly LOGINDCONF
-  readonly LOGINDEFS
-  readonly LOGROTATE
-  readonly PAMLOGIN
-  readonly RESOLVEDCONF
-  readonly RKHUNTERCONF
-  readonly SECURITYACCESS
-  readonly SSHDFILE
-  readonly SYSCTL
-  readonly SYSTEMCONF
-  readonly TIMESYNCD
-  readonly UFWDEFAULT
-  readonly USERADD
-  readonly USERCONF
+sudo chmod 755 scripts -R #ensure source can access modules
 
-  # shellcheck disable=1090
-  for s in ./scripts/[0-9_]*; do
-    [[ -e $s ]] || break
+source scripts/apt.sh
+source scripts/ufw.sh
+source scripts/users.sh
+source scripts/sysctl.sh
+source scripts/hosts.sh
+source scripts/perm.sh
+source scripts/cron.sh
+source scripts/audit.sh
+source scripts/banners.sh
+source scripts/sudo.sh
+source scripts/process.sh
+source scripts/aide.sh
+source scripts/php.sh
+source scripts/apache.sh
+source scripts/vsftpd.sh
+source scripts/ssh.sh
+source scripts/nginx.sh
+source scripts/samba.sh
+source scripts/pureftpd.sh
+source scripts/purge.sh
+source scripts/malware.sh
+source scripts/filemgt.sh
+source scripts/apparmor.sh
 
-    source "$s"
-  done
 
-  f_pre
-  f_firewall
-  f_disablenet
-  f_disablefs
-  f_disablemod
-  f_systemdconf
-  f_resolvedconf
-  f_logindconf
-  f_journalctl
-  f_timesyncd
-  f_fstab
-  f_prelink
-  f_aptget_configure
-  f_aptget
-  f_hosts
-  f_issue
-  f_logindefs
-  f_sysctl
-  f_limitsconf
-  f_adduser
-  f_rootaccess
-  f_package_remove
-  f_package_install
-  f_coredump
-  f_usbguard
-  f_postfix
-  f_apport
-  f_motdnews
-  f_rkhunter
-  f_sshdconfig
-  f_apache
-  f_vsftpd
-  f_pureftpd
-  f_malware
-  f_filemgt
-  f_password
-  f_cron
-  f_ctrlaltdel
-  f_auditd
-  f_aide
-  f_rhosts
-  f_users
-  f_lockroot
-  f_aptget_clean
-  f_suid
-  f_restrictcompilers
-  f_umask
-  f_path
-  f_aa_enforce
-  f_aide_post
-  f_aide_timer
-  f_aptget_noexec
-  f_systemddelta
-  f_checkreboot
+echo "Ubuntu Hardening Script v.1.0.3 for Ubuntu 14.04"
+echo "Created by Ben Hall"
+echo "Note: Designed for CyberPatriots! Any use within the CyberPatriots competition will disqualify you!"
+echo
 
-  echo
-}
+read -p "Configure/Install apt? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_apt
+fi
 
-LOGFILE="hardening-$(hostname --short)-$(date +%y%m%d).log"
-echo "[HARDENING LOG - $(hostname --fqdn) - $(LANG=C date)]" >> ~/Documents
+read -p "Configure the firewall? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_ufw
+fi
 
-main "$@" | tee -a ~/Documents
+read -p "Configure account settings? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_users
+fi
+
+read -p "Configure hosts file? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_hosts
+fi
+
+read -p "Manage file system? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_filemgt
+fi
+
+read -p "Configure sysctl? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_sysctl
+fi
+
+read -p "Configure audit? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_audit
+fi
+
+read -p "Configure PHP? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_php
+fi
+
+read -p "Configure apparmor? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_apparmor
+fi
+
+read -p "Edit banners? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_banners
+fi
+
+read -p "Configure sudo? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_sudo
+fi
+
+read -p "Harden processes? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_process
+fi
+
+read -p "Configure AIDE?" -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_aide
+fi
+
+read -p "Configure permissions?" -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_perm
+fi
+
+read -p "Uninstall malicious software?" -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_malware
+fi
+
+read -p "Configure SSH" -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_ssh
+  else
+    sudo apt-get purge openssh-server
+fi
+
+read -p "Configure vsFTPd" -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_vsftpd
+  else
+    sudo apt-get purge vsftpd
+fi
+
+read -p "Configure pure-ftpd?" -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_pureftpd
+  else
+    sudo apt-get purge pure-ftpd
+fi
+
+read -p "Configure samba?" -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_samba
+  else
+    sudo apt-get purge samba
+fi
+
+read -p "Configure Apache?" -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    f_apache
+  else
+    sudo apt-get purge apache2
+fi
+
+read -p "Uninstall nginx?" -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    sudo apt-get purge nginx
+fi
+
+read -p "Uninstall bind9?" -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    sudo apt-get purge bind9
+fi
+
+read -p "Uninstall postfix?" -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    sudo apt-get purge postfix
+fi
+
+read -p "Purge vulnerable software??" -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+  f_purge
+fi
+
+
+echo "Ubuntu Hardening Script finished!"
+echo -n "Press any button to exit."
+echo
