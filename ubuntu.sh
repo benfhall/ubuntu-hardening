@@ -9,6 +9,7 @@
 
 sudo chmod 755 scripts -R #ensure source can access modules
 
+source readme.cfg
 source scripts/apt.sh
 source scripts/ufw.sh
 source scripts/users.sh
@@ -150,7 +151,7 @@ then
   f_purge
 fi
 
-if [[ $DESIREDUSERS =~ .*ssh.* ]]
+if [[ $CRITICALSERVICES =~ .*ssh.* ]]
 then
     f_ssh
 else
@@ -162,7 +163,7 @@ else
     fi
 fi
 
-if [[ $DESIREDUSERS =~ .*vsftpd.* ]]
+if [[ $CRITICALSERVICES =~ .*vsftpd.* ]]
 then
     f_vsftpd
 else
@@ -174,7 +175,7 @@ else
     fi
 fi
 
-if [[ $DESIREDUSERS =~ .*nginx.* ]]
+if [[ $CRITICALSERVICES =~ .*nginx.* ]]
 then
     f_nginx
 else
@@ -186,7 +187,7 @@ else
     fi
 fi
 
-if [[ $DESIREDUSERS =~ .*samba.* ]]
+if [[ $CRITICALSERVICES =~ .*samba.* ]]
 then
     f_samba
 else
@@ -198,7 +199,7 @@ else
     fi
 fi
 
-if [[ $DESIREDUSERS =~ .*mysql.* ]]
+if [[ $CRITICALSERVICES =~ .*mysql.* ]]
 then
     f_mysql
 else
