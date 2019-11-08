@@ -143,72 +143,6 @@ then
     f_malware
 fi
 
-read -p "Configure SSH" -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    f_ssh
-  else
-    sudo apt-get purge openssh-server
-fi
-
-read -p "Configure vsFTPd" -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    f_vsftpd
-  else
-    sudo apt-get purge vsftpd
-fi
-
-read -p "Configure pure-ftpd?" -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    f_pureftpd
-  else
-    sudo apt-get purge pure-ftpd
-fi
-
-read -p "Configure samba?" -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    f_samba
-  else
-    sudo apt-get purge samba
-fi
-
-read -p "Configure Apache?" -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    f_apache
-  else
-    sudo apt-get purge apache2
-fi
-
-read -p "Uninstall nginx?" -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    sudo apt-get purge nginx
-fi
-
-read -p "Uninstall bind9?" -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    sudo apt-get purge bind9
-fi
-
-read -p "Uninstall postfix?" -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    sudo apt-get purge postfix
-fi
-
 read -p "Purge vulnerable software??" -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
@@ -216,6 +150,65 @@ then
   f_purge
 fi
 
+if [[ $DESIREDUSERS =~ .*ssh.* ]]
+then
+    f_ssh
+else
+    read -p "Remove ssh?" -n 1 -r deletionConfirmation
+    echo
+    if [[ $deletionConfirmation =~ ^[Yy]$ ]]
+    then
+        sudo apt-get purge ssh
+    fi
+fi
+
+if [[ $DESIREDUSERS =~ .*vsftpd.* ]]
+then
+    f_vsftpd
+else
+    read -p "Remove vsftpd?" -n 1 -r deletionConfirmation
+    echo
+    if [[ $deletionConfirmation =~ ^[Yy]$ ]]
+    then
+        sudo apt-get purge vsftpd
+    fi
+fi
+
+if [[ $DESIREDUSERS =~ .*nginx.* ]]
+then
+    f_nginx
+else
+    read -p "Remove nginx?" -n 1 -r deletionConfirmation
+    echo
+    if [[ $deletionConfirmation =~ ^[Yy]$ ]]
+    then
+        sudo apt-get purge nginx
+    fi
+fi
+
+if [[ $DESIREDUSERS =~ .*samba.* ]]
+then
+    f_samba
+else
+    read -p "Remove samba?" -n 1 -r deletionConfirmation
+    echo
+    if [[ $deletionConfirmation =~ ^[Yy]$ ]]
+    then
+        sudo apt-get purge samba
+    fi
+fi
+
+if [[ $DESIREDUSERS =~ .*mysql.* ]]
+then
+    f_mysql
+else
+    read -p "Remove mysql?" -n 1 -r deletionConfirmation
+    echo
+    if [[ $deletionConfirmation =~ ^[Yy]$ ]]
+    then
+        sudo apt-get purge mysql
+    fi
+fi
 
 echo "Ubuntu Hardening Script finished!"
 echo -n "Press any button to exit."

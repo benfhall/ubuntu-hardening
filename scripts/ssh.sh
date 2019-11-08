@@ -1,6 +1,5 @@
 function f_ssh {
   sudo echo "Configuring ssh"
-cp /etc/ssh/sshd_config "$SSHDFILE-$(date +%s)"
 
   sudo sed -i '/HostKey.*ssh_host_dsa_key.*/d' /etc/ssh/sshd_config
   sudo sed -i '/KeyRegenerationInterval.*/d' /etc/ssh/sshd_config
@@ -74,10 +73,10 @@ cp /etc/ssh/sshd_config "$SSHDFILE-$(date +%s)"
     sudo sed -i 's/MaxSessions.*/MaxSessions 2/' /etc/ssh/sshd_config
   fi
 
-  if ! grep -q "^Usudo sedNS" /etc/ssh/sshd_config 2> /dev/null; then
-    sudo echo "Usudo sedNS no" >> /etc/ssh/sshd_config
+  if ! grep -q "^UseDNS" /etc/ssh/sshd_config 2> /dev/null; then
+    sudo echo "UseDNS no" >> /etc/ssh/sshd_config
   else
-    sudo sed -i 's/Usudo sedNS.*/Usudo sedNS no/' /etc/ssh/sshd_config
+    sudo sed -i 's/UseDNS.*/Usudo sedNS no/' /etc/ssh/sshd_config
   fi
 
   if ! grep -q "^StrictModes" /etc/ssh/sshd_config 2> /dev/null; then
@@ -92,10 +91,10 @@ cp /etc/ssh/sshd_config "$SSHDFILE-$(date +%s)"
     sudo sed -i 's/MaxStartups.*/MaxStartups 10:30:60/' /etc/ssh/sshd_config
   fi
 
-  if ! grep -q "^Hostbasudo sedAuthentication" /etc/ssh/sshd_config 2> /dev/null; then
-    sudo echo "Hostbasudo sedAuthentication no" >> /etc/ssh/sshd_config
+  if ! grep -q "^HostbasedAuthentication" /etc/ssh/sshd_config 2> /dev/null; then
+    sudo echo "HostbasedAuthentication no" >> /etc/ssh/sshd_config
   else
-    sudo sed -i 's/Hostbasudo sedAuthentication.*/Hostbasudo sedAuthentication no/' /etc/ssh/sshd_config
+    sudo sed -i 's/HostbasedAuthentication.*/HostbasedAuthentication no/' /etc/ssh/sshd_config
   fi
 
   sudo cp /etc/ssh/sshd_config "/etc/ssh/sshd_config.$(date +%y%m%d)"
