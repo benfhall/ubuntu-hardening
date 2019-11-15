@@ -1,5 +1,7 @@
 function f_banners {
 	echo "Editing banners."
+	
+	sudo apt-get install motd
 
 	sudo chown root:root /etc/motd
 	sudo sudo chmod 644 /etc/motd
