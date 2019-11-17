@@ -1,5 +1,5 @@
 function f_purge {
-  echo "Purging vulnerable software..."
+  echo -n "Purging vulnerable software... "
 
   sudo apt-get remove nis
   sudo sed -i 's/RSYNC_ENABLE=.*/RSYNC_ENABLE=false'
@@ -15,5 +15,7 @@ function f_purge {
   sudo apt-get remove cups
   sudo apt-get remove rpcbind
   sudo apt-get purge wesnoth
+
+  echo "[COMPLETE]"
 
 }

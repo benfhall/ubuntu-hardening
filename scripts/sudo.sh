@@ -1,5 +1,5 @@
 function f_sudo {
-	echo "Configuring sudo"
+	echo -n "Configuring sudo... "
 
 	sudo apt-get install sudo
 	sudo sed -i "s/#.*auth.*required.*pam_wheel\.so/auth required pam_wheel\.so group=wheel debug/" /etc/pam.d/su

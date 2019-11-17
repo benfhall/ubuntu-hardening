@@ -1,33 +1,44 @@
 function f_apache {
-  echo "Configuring apache"
+  echo -n "Configuring Apache... "
 
-  sudo sed -i 's/.*FileETag.*//' /etc/apache2/apache2.conf
-  sudo echo "FileETag None" >> /etc/apache2/apache2.conf
-  sudo sed -i 's/.*RewriteEngine.*//' /etc/apache2/apache2.conf
-  sudo echo "RewriteEngine On" >> /etc/apache2/apache2.conf
-  sudo sed -i 's/.*RewriteCond.*//' /etc/apache2/apache2.conf
-  sudo echo "RewriteCond %{THE_REQUEST} !HTTP/1\.1$" >> /etc/apache2/apache2.conf
-  sudo sed -i 's/.*RewriteRule.*//' /etc/apache2/apache2.conf
-  sudo echo "RewriteRule .* - F" >> /etc/apache2/apache2.conf
-  sudo sed -i 's/.*TraceEnable.*//' /etc/apache2/apache2.conf
-  sudo echo "TraceEnable off" >> /etc/apache2/apache2.conf
-  sudo sed -i 's/.*Timeout.*//' /etc/apache2/apache2.conf
-  sudo echo "Timeout 45" >> /etc/apache2/apache2.conf
-  sudo sed -i 's/.*ServerSignature.*//' /etc/apache2/apache2.conf
-  sudo echo "ServerSignature Off" >> /etc/apache2/apache2.conf
-  sudo sed -i 's/.*ServerTokens.*//' /etc/apache2/apache2.conf
-  sudo echo "Servertokens Prod" >> /etc/apache2/apache2.conf
-  sudo sed -i "s/SSLProtocol all -SSLv3/SSLProtocol –ALL +TLSv1 +TLSv1.1 +TLSv1.2/" /etc/apache2/mods-available/ssl.conf
-  sudo sed -i "s/SSLCipherSuite HIGH:\!aNULL/SSLCipherSuite HIGH:\!MEDIUM:\!aNULL:\!MD5:\!RC4/" /etc/apache2/mods-available/ssl.conf
+  sudo apt-get install apache2
 
-  a2dismod -f autoindex
-  a2enmod headers
+  # Protection Against Fingerprinting
+  echo "Protection Against Fingerprinting"
+  sudo sed -i -e 's/ServerSignature On/ServerSignature Off/' $APACHE_CONFIG
+  sudo sed -i -e 's/ServerTokens OS/ServerTokens Prod/' $APACHE_CONFIG
 
-  sudo iptables -I INPUT -p tcp --dport 80 -i eth0 -m state --state NEW -m recent --set
-  sudo iptables -I INPUT -p tcp --dport 80 -i eth0 -m state --state NEW -m recent --update --seconds 60 --hitcount 5 -j DROP
-  iptables-save > /root/my.active.firewall.rules
+  # Disabling Directory Listing 
+  echo "Disabling Directory Listing"
+  sudo sed -r -i -e 's|^([[:space:]]*)</Directory>|\n\n\1\t# Hardening Related Configurations ===============\n\1</Directory>|g' $APACHE_CONFIG
+  sudo sed -r -i -e 's|^([[:space:]]*)</Directory>|\1\tOptions -Indexes\n\1</Directory>|g' $APACHE_CONFIG
+  # Disable Server Side Includes and Symbolic Links
 
+  echo "Disable Server Side Includes and Symbolic Links"
+  sudo sed -r -i -e 's|^([[:space:]]*)</Directory>|\1\tOptions -Includes\n\1\tOptions -FollowSymLinks\n\1</Directory>|g' $APACHE_CONFIG
+
+  # Limit Request Size To Prevent DOS
+  echo "Limit Request Size To Prevent DOS"
+  sudo sed -r -i -e 's|^([[:space:]]*)</Directory>|\1\tLimitRequestBody 512000\n\1\tOptions -FollowSymLinks\n\1</Directory>|g' $APACHE_CONFIG 
+
+  # Disable Risky HTTP Methods
+  echo "Disable Risky HTTP Methods"
+  sudo sed -r -i -e 's|^([[:space:]]*)</Directory>|\n\1\t<LimitExcept GET POST HEAD>\n\1\t\tdeny from all\n\1\t</LimitExcept>\n\n</Directory>|g' $APACHE_CONFIG
+
+  # Enable XSS Protection For Modern Browsers
+  echo "Enable XSS Protection For Modern Browsers..."
+  sudo echo '' >> $APACHE_CONFIG 
+  sudo echo '<IfModule mod_headers.c>' >> $APACHE_CONFIG 
+  sudo echo 'Header set X-XSS-Protection 0' >> $APACHE_CONFIG 
+  sudo echo '</IfModule>' >> $APACHE_CONFIG 
+
+  # Protect Apache Binary Files
+  sudo chown -R root:root /etc/httpd/conf /etc/httpd/bin >/dev/null 2>&1 &
+  sudo chmod -R 750 /etc/httpd/conf /etc/httpd/bin >/dev/null 2>&1 &
+
+  sudo ufw allow apache2
   sudo service apache2 enable
   sudo service apache2 restart
 
+  echo "[COMPLETE]"
 }

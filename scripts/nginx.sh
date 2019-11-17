@@ -1,5 +1,5 @@
 function f_nginx {
-	echo "Configuring nginx"
+	echo -n "Configuring nginx... "
 
 	sudo sed -i "s/# server_tokens off;/server_tokens off;/g" /etc/nginx/nginx.conf
 	sudo sed -i 's/server_tokens off;/server_tokens off;\netag off;/' /etc/nginx/nginx.conf
@@ -15,7 +15,10 @@ function f_nginx {
 	sudo sed -i "s|root /var/www/html;|root /var/www/html;\nadd_header Content-Security-Policy \"default-src 'self';\";|" /etc/nginx/sites-available/default
 	sudo sed -i "s|root /var/www/html;|root /var/www/html;\nadd_header X-Robots-Tag none;|" /etc/nginx/sites-available/default
 
-	sudo service nginx enable
 	sudo service nginx restart
-
+  	sudo ufw allow nginx
+  	sudo service nginx enable
+  	sudo service nginx restart
+	
+	echo "[COMPLETE]"
 }

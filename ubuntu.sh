@@ -1,23 +1,20 @@
 #!/bin/bash
-# Copyright (c) 2015-2016 Ben Hall
+# Copyright (c) 2015-2019 Ben Hall
 # All rights reserved.
 #
-# Name: ubuntu-hardening-scriptst
-# Version: 1.0.3
+# Name: ubuntu-hardening
+# Version: 3.0.1
 # PLAT:  linux-64
 # PLAT-Version: linux-14.04
 
 sudo chmod 755 scripts -R #ensure source can access modules
 
-source readme.cfg
 source scripts/apt.sh
 source scripts/ufw.sh
 source scripts/users.sh
 source scripts/sysctl.sh
 source scripts/hosts.sh
 source scripts/perm.sh
-source scripts/cron.sh
-source scripts/audit.sh
 source scripts/banners.sh
 source scripts/sudo.sh
 source scripts/process.sh
@@ -27,147 +24,58 @@ source scripts/apache.sh
 source scripts/vsftpd.sh
 source scripts/ssh.sh
 source scripts/nginx.sh
+source scripts/mysql.sh
 source scripts/samba.sh
 source scripts/pureftpd.sh
 source scripts/purge.sh
 source scripts/malware.sh
 source scripts/filemgt.sh
-source scripts/apparmor.sh
 
 echo "Ubuntu Hardening Script v.1.0.3 for Ubuntu 14.04"
 echo "Created by Ben Hall"
 echo "Note: Designed for CyberPatriots! Any use within the CyberPatriots competition will disqualify you!"
+read -p "Press any key to continue... " -n 1
 echo
 
-read -p "Configure/Install apt? " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
+read -p "Configure/Install apt? (y/N) >> " -n 1 -r input_apt
+read -p "Configure the firewall? (y/N) >> " -n 1 -r input_firewall
+read -p "Configure user settings? (y/N) >> " -n 1 -r input_users
+if [[ $input_users =~ ^[Yy]$ ]]
 then
-    f_apt
+    read -p "Input admins in README (seperate with spaces) >> " -r givenAdmins
+    read -p "Input users in README (seperate with spaces) >> " -r givenUsers
+    read -p "Input general password >>" -r passwd
 fi
+read -p "Configure hosts file? (y/N) >> " -n 1 -r input_hosts
+read -p "Delete media files? (y/N) >> " -n 1 -r input_files
+read -p "Configure sysctl? (y/N) >> " -n 1 -r input_sysctl
+read -p "Edit banners? (y/N) >> " -n 1 -r input_banners
+read -p "Configure sudo? (y/N) >> " -n 1 -r input_sudo
+read -p "Harden processes? (y/N) >> " -n 1 -r input_processes
+read -p "Configure AIDE? (y/N) >> " -n 1 -r input_aide
+read -p "Configure permissions? (y/N) >> " -n 1 -r input_perm
+read -p "Uninstall malicious software? (y/N) >> " -n 1 -r input_malware
+read -p "Purge vulnerable software? (y/N) >> " -n 1 -r input_purge
+read -p "Harden mysql databases? (y/N) >> " -n 1 -r input_mysql
+read -p "Input critical services from README (seperate with spaces) >> " -r criticalServices
 
-read -p "Configure the firewall? " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
+if [[ $criticalServices =~ .*ssh.* ]]
 then
-    f_ufw
-fi
-
-read -p "Configure account settings? " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    f_users
-fi
-
-read -p "Configure hosts file? " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    f_hosts
-fi
-
-read -p "Manage file system? " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    f_filemgt
-fi
-
-read -p "Configure sysctl? " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    f_sysctl
-fi
-
-read -p "Configure audit? " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    f_audit
-fi
-
-read -p "Configure PHP? " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    f_php
-fi
-
-read -p "Configure apparmor? " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    f_apparmor
-fi
-
-read -p "Edit banners? " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    f_banners
-fi
-
-read -p "Configure sudo? " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    f_sudo
-fi
-
-read -p "Harden processes? " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    f_process
-fi
-
-read -p "Configure AIDE?" -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    f_aide
-fi
-
-read -p "Configure permissions?" -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    f_perm
-fi
-
-read -p "Uninstall malicious software?" -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    f_malware
-fi
-
-read -p "Purge vulnerable software??" -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-  f_purge
-fi
-
-if [[ $CRITICALSERVICES =~ .*ssh.* ]]
-then
-    f_ssh
+    echo "SSH not a critical service"
 else
-    read -p "Remove ssh?" -n 1 -r deletionConfirmation
+    read -p "Remove ssh? (y/N) >> " -n 1 -r deletionConfirmation
     echo
     if [[ $deletionConfirmation =~ ^[Yy]$ ]]
     then
-        sudo apt-get purge ssh
+        sudo apt-get purge openssh-server
     fi
 fi
 
-if [[ $CRITICALSERVICES =~ .*vsftpd.* ]]
+if [[ $criticalServices =~ .*vsftpd.* ]]
 then
-    f_vsftpd
+    echo "VSFTPD not a critical service"
 else
-    read -p "Remove vsftpd?" -n 1 -r deletionConfirmation
+    read -p "Remove vsftpd? (y/N) >> " -n 1 -r deletionConfirmation
     echo
     if [[ $deletionConfirmation =~ ^[Yy]$ ]]
     then
@@ -175,23 +83,11 @@ else
     fi
 fi
 
-if [[ $CRITICALSERVICES =~ .*nginx.* ]]
+if [[ $criticalServices =~ .*samba.* ]]
 then
-    f_nginx
+    echo "Samba not a critical service"
 else
-    read -p "Remove nginx?" -n 1 -r deletionConfirmation
-    echo
-    if [[ $deletionConfirmation =~ ^[Yy]$ ]]
-    then
-        sudo apt-get purge nginx
-    fi
-fi
-
-if [[ $CRITICALSERVICES =~ .*samba.* ]]
-then
-    f_samba
-else
-    read -p "Remove samba?" -n 1 -r deletionConfirmation
+    read -p "Remove samba? (y/N) >> " -n 1 -r deletionConfirmation
     echo
     if [[ $deletionConfirmation =~ ^[Yy]$ ]]
     then
@@ -199,16 +95,106 @@ else
     fi
 fi
 
-if [[ $CRITICALSERVICES =~ .*mysql.* ]]
+if [[ $criticalServices =~ .*nginx.* ]]
 then
-    f_mysql
+    echo "Nginx not a critical service"
 else
-    read -p "Remove mysql?" -n 1 -r deletionConfirmation
+    read -p "Remove nginx? (y/N) >> " -n 1 -r deletionConfirmation
     echo
     if [[ $deletionConfirmation =~ ^[Yy]$ ]]
     then
-        sudo apt-get purge mysql
+        sudo apt-get purge nginx
     fi
+fi
+
+if [[ $input_apt =~ ^[Yy]$ ]]
+then
+    f_apt
+fi
+
+if [[ $input_firewall =~ ^[Yy]$ ]]
+then
+    f_ufw
+fi
+
+if [[ $input_users =~ ^[Yy]$ ]]
+then
+    f_users
+fi
+
+if [[ $input_hosts =~ ^[Yy]$ ]]
+then
+    f_hosts
+fi
+
+if [[ $input_files =~ ^[Yy]$ ]]
+then
+    f_filemgt
+fi
+
+if [[ $input_sysctl =~ ^[Yy]$ ]]
+then
+    f_sysctl
+fi
+
+if [[ $input_banners =~ ^[Yy]$ ]]
+then
+    f_banners
+fi
+
+if [[ $input_sudo =~ ^[Yy]$ ]]
+then
+    f_sudo
+fi
+
+if [[ $input_processes =~ ^[Yy]$ ]]
+then
+    f_process
+fi
+
+if [[ $input_aide =~ ^[Yy]$ ]]
+then
+    f_aide
+fi
+
+if [[ $input_perm =~ ^[Yy]$ ]]
+then
+    f_perm
+fi
+
+if [[ $input_malware =~ ^[Yy]$ ]]
+then
+    f_malware
+fi
+
+if [[ $input_purge =~ ^[Yy]$ ]]
+then
+  f_purge
+fi
+
+if [[ $input_mysql =~ ^[Yy]$ ]]
+then
+  f_mysql
+fi
+
+if [[ $CRITICALSERVICES =~ .*ssh.* ]]
+then
+    f_ssh
+fi
+
+if [[ $CRITICALSERVICES =~ .*vsftpd.* ]]
+then
+    f_vsftpd
+fi
+
+if [[ $CRITICALSERVICES =~ .*nginx.* ]]
+then
+    f_nginx
+fi
+
+if [[ $CRITICALSERVICES =~ .*samba.* ]]
+then
+    f_samba
 fi
 
 echo "Ubuntu Hardening Script finished!"

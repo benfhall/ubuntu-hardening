@@ -1,5 +1,5 @@
 function f_pureftpd {
-  sudo echo "Configuring pure-ftpd"
+  sudo echo -n "Configuring pure-ftpd... "
 
   sudo echo "yes" > /etc/pure-ftpd/conf/NoAnonymous
   sudo echo "yes" > /etc/pure-ftpd/conf/ChrootEveryone
@@ -7,8 +7,11 @@ function f_pureftpd {
   sudo echo "2" > /etc/pure-ftpd/conf/TLS
   sudo apt-get install ftp
 
-  sudo ufw allow 21
-
   sudo service pure-ftpd restart
+  sudo ufw allow pure-ftpd
+  sudo service pure-ftpd enable
+  sudo service pure-ftpd restart
+
+  echo "[COMPLETE]"
 
 }

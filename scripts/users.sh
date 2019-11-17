@@ -1,7 +1,7 @@
 source ~/ubuntu-hardening/readme.cfg
 
 function f_users {
-  echo "Configuring account settings"
+  echo -n "Configuring account settings... "
 
   #common-password/auth
   if ! grep pam_pwhistory.so /etc/pam.d/common-password; then
@@ -50,53 +50,57 @@ function f_users {
     sudo userdel -r "$users" 2> /dev/null
   done
 
-  #delete users that aren't given
-  ls /home > ~/ubuntu-hardening/users.cfg
-  cat users.cfg | tr '\n' ' ' > users_clean.cfg
-  ALLUSERS=`cat users_clean.cfg`
+  #ask for user info
+  
+  givenAllUsers="$givenAdmins $givenUsers"
+  sysUsers="$(ls /home)"
+  sysAdmins=$(getent group sudo | cut -d: -f4 | tr ',' ' ')
 
-  for u in $ALLUSERS
+  #delete users that aren't authorized
+  for user in $sysUsers
   do
-    if [[ $DESIREDUSERS =~ .*$u.* ]]
+    if [[ $givenAllUsers =~ $user ]];
     then
-      echo
+      echo "Did not delete user $user."
+      echo "$user:$passwd" | sudo chpasswd
+      echo "Changed password for user $user."
     else
-      read -p "Delete user $u?" -n 1 -r deletionConfirmation
+      read -p "Delete user $user? (y/N) >> " -n 1 -r deletionConfirmation
       echo
-      if [[ $deletionConfirmation =~ ^[Yy]$ ]]
+      if [[ $deletionConfirmation =~ ^[Yy]$ ]];
       then
-          sudo deluser $u
+        echo "Deleting user $user."
+      else
+        echo "Did not delete user $user."
       fi
     fi
   done
 
-  for u in $SIMPLEPASSWD
-  do
-    sudo passwd -l $u
-  done
-
   #remove undesired admins from sudo + give admin to desired admins
-  > ~/ubuntu-hardening/sudoers.cfg
-  getent group sudo | cut -d: -f4 >> ~/ubuntu-hardening/sudoers.cfg
-  sudo sed -i 's/,/ /g' sudoers.cfg
-  ALLADMINS=`cat sudoers.cfg`
 
-  for u in $ALLADMINS
+  for admin in $sysAdmins
   do
-    if [[ $DESIREDADMINS =~ .*$u.* ]]
+    if [[ $givenAdmins =~ .*$admin.* ]]
     then
-      read -p "Make user $u an admin?" -n 1 -r makeAdminConfirm
-      echo
-      if [[ $makeAdminConfirm =~ ^[Yy]$ ]]
-      then
-          sudo usermod -a -G sudo $u
-      fi
+      echo "$admin is already in the admin group."
     else
-      read -p "Make user $u an admin?" -n 1 -r delAdminConfirm
+      read -p "Remove $admin from admin group? (y/N) >> " -n 1 -r delAdminConfirm
       echo
       if [[ $delAdminConfirm =~ ^[Yy]$ ]]
       then
-          sudo gpasswd -d $u sudo
+        echo "Removed $admin from the admin group."
+        sudo gpasswd -d $admin sudo
+      else
+        echo "Did not remove $admin from the admin group."
+        read -p "Add $admin to the admin group? (y/N) >> " -n 1 -r makeAdminConfirm
+        echo
+        if [[ $makeAdminConfirm =~ ^[Yy]$ ]]
+        then
+          echo "Added $admin to the admin group."
+          sudo usermod -a -G sudo $admin
+        else
+          echo "Did not add $admin to the admin group."
+        fi
       fi
     fi
   done
@@ -110,5 +114,7 @@ function f_users {
       sudo passwd -l $u
     fi
   done
+
+  echo "[COMPLETE]"
 
 }

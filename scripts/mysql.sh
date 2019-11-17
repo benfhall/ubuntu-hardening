@@ -1,5 +1,5 @@
 function f_mysql {
-    echo "Configuring MySQL"
+    echo -n "Configuring MySQL... "
     
     if ! grep -q "^max_connect_errors" /etc/mysql/my.cnf 2> /dev/null; then
         sudo echo "max_connect_errors = 3" >> /etc/mysql/my.cnf
@@ -18,5 +18,12 @@ function f_mysql {
     fi
 
     sudo mysql_secure_installation
+
+    sudo service mysql restart
+  	sudo ufw allow mysql
+  	sudo service mysql enable
+  	sudo service mysql restart
+
+    echo "[COMPLETE]"
 
 }

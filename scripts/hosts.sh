@@ -1,5 +1,5 @@
 function f_hosts {
-  sudo echo "Configuring hosts files"
+  sudo -n echo "Configuring hosts files... "
 
   sudo echo "sshd : ALL : ALLOW" > /etc/hosts.allow
   sudo echo "ALL: LOCAL, 127.0.0.1" >> /etc/hosts.allow
@@ -9,5 +9,7 @@ function f_hosts {
 
   sudo chmod 644 /etc/hosts.allow
   sudo chmod 644 /etc/hosts.deny
+
+  echo "[COMPLETE]"
 
 }
