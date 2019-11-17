@@ -1,12 +1,12 @@
 function f_hosts {
 
-  sudo echo "sshd : ALL : ALLOW" > /etc/hosts.allow
-  sudo echo "ALL: LOCAL, 127.0.0.1" >> /etc/hosts.allow
-  sudo echo "ALL: ALL" > /etc/hosts.deny
-  sudo chmod 644 /etc/hosts.allow
-  sudo chmod 644 /etc/hosts.deny
+  echo "sshd : ALL : ALLOW" > /etc/hosts.allow
+  echo "ALL: LOCAL, 127.0.0.1" >> /etc/hosts.allow
+  echo "ALL: ALL" > /etc/hosts.deny
+  chmod 644 /etc/hosts.allow
+  chmod 644 /etc/hosts.deny
 
-  sudo chmod 644 /etc/hosts.allow
-  sudo chmod 644 /etc/hosts.deny
+  chmod 644 /etc/hosts.allow
+  chmod 644 /etc/hosts.deny
 
 }

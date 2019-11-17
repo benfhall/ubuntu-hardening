@@ -1,10 +1,10 @@
 function f_ufw {
 
-  sudo apt-get install ufw -y
+  apt-get install ufw -y
 
-  sudo ufw reset
-  sudo ufw enable
+  ufw reset
+  ufw enable
 
-  sudo service ufw restart
+  service ufw restart
 
 }

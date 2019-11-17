@@ -1,7 +1,7 @@
-function f_sudo {
+function f_{
 
-	sudo apt-get install sudo -y
-	sudo sed -i "s/#.*auth.*required.*pam_wheel\.so/auth required pam_wheel\.so group=wheel debug/" /etc/pam.d/su
-	sudo echo "%wheel  ALL=(ALL:ALL) ALL" >> /etc/sudoers
+	apt-get install sudo -y
+	sed -i "s/#.*auth.*required.*pam_wheel\.so/auth required pam_wheel\.so group=wheel debug/" /etc/pam.d/su
+	echo "%wheel  ALL=(ALL:ALL) ALL" >> /etc/sudoers
 
 }

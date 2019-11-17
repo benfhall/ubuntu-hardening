@@ -1,35 +1,33 @@
-source ~/ubuntu-hardening/readme.cfg
-
 function f_users {
 
   #common-passwd / common-auth / login.defs
 
-  sudo mv /etc/pam.d/common-auth  /etc/pam.d/login.defs.old
-  sudo mv ~/ubuntu-hardening/defaults/login.defs /etc/pam.d/login.defs
+  mv /etc/pam.d/common-auth  /etc/pam.d/login.defs.old
+  mv ~/ubuntu-hardening/defaults/login.defs /etc/pam.d/login.defs
 
-  sudo mv /etc/pam.d/common-password  /etc/pam.d/common-password.old
-  sudo mv ~/ubuntu-hardening/defaults/common-password /etc/pam.d/common-password
+  mv /etc/pam.d/common-password  /etc/pam.d/common-password.old
+  mv ~/ubuntu-hardening/defaults/common-password /etc/pam.d/common-password
 
-  sudo mv /etc/login.defs  /etc/login.defs.old
-  sudo mv ~/ubuntu-hardening/defaults/login.defs /etc/login.defs
+  mv /etc/login.defs  /etc/login.defs.old
+  mv ~/ubuntu-hardening/defaults/login.defs /etc/login.defs
 
   #disable guest account
-  sudo echo "allow-guest=false" >> /etc/lightdm/lightdm.conf
+  echo "allow-guest=false" >> /etc/lightdm/lightdm.conf
 
-  sudo passwd -l root
+  passwd -l root
 
   #restrict sudo
   if ! grep -E '^+\s:\sroot\s:\s127.0.0.1$|^:root:127.0.0.1' /etc/security/access.conf; then
-    sudo sed -i 's/^#.*root.*:.*127.0.0.1$/+:root:127.0.0.1/' /etc/security/access.conf
+    sed -i 's/^#.*root.*:.*127.0.0.1$/+:root:127.0.0.1/' /etc/security/access.conf
   fi
 
   if ! grep -q 'auth required' /etc/pam.d/su; then
-    sudo echo "auth required pam_wheel.so" > /etc/pam.d/su
+    echo "auth required pam_wheel.so" > /etc/pam.d/su
   fi
 
   #delete unnecessary users
   for users in games gnats irc list news sync uucp; do
-    sudo userdel -r "$users" 2> /dev/null
+    userdel -r "$users" 2> /dev/null
   done
 
   #ask for user info
@@ -47,7 +45,7 @@ function f_users {
       then
         echo "Did not change current user."
       else
-        echo "$user:$passwd" | sudo chpasswd
+        echo "$user:$passwd" | chpasswd
         echo "Changed password for user $user."
       fi
     else
@@ -75,7 +73,7 @@ function f_users {
       if [[ $delAdminConfirm =~ ^[Yy]$ ]]
       then
         echo "Removed $admin from the admin group."
-        sudo gpasswd -d $admin sudo
+        gpasswd -d $admin sudo
       else
         echo "Did not remove $admin from the admin group."
         read -p "Add $admin to the admin group? (y/N) >> " -n 1 -r makeAdminConfirm
@@ -83,7 +81,7 @@ function f_users {
         if [[ $makeAdminConfirm =~ ^[Yy]$ ]]
         then
           echo "Added $admin to the admin group."
-          sudo usermod -a -G sudo $admin
+          usermod -a -G sudo $admin
         else
           echo "Did not add $admin to the admin group."
         fi
@@ -95,9 +93,9 @@ function f_users {
   USERS="$(cut -d: -f 1 /etc/passwd)" 
   for u in $USERS
   do
-    sudo passwd -S $u | grep -Ew "NP" >/dev/null
+    passwd -S $u | grep -Ew "NP" >/dev/null
     if [ $? -eq 0 ]; then
-      sudo passwd -l $u
+      passwd -l $u
     fi
   done
 

@@ -7,7 +7,7 @@
 # PLAT:  linux-64
 # PLAT-Version: linux-14.04
 
-sudo chmod 755 scripts -R #ensure source can access modules
+chmod 755 scripts -R #ensure source can access modules
 
 source scripts/apt.sh
 source scripts/ufw.sh
@@ -91,7 +91,7 @@ if [[ $criticalServices =~ .*ssh.* ]]
 then
     echo "SSH is identified as a critical service and will not be uninstalled"
 else
-    if [[ $(sudo apt-cache policy openssh-server) =~ .*"Installed: (none)".* ]]
+    if [[ $(apt-cache policy openssh-server) =~ .*"Installed: (none)".* ]]
     then
         echo "SSH is not currently installed and is not a critical service."
     else
@@ -99,7 +99,7 @@ else
         echo
         if [[ $deletionConfirmation =~ ^[Yy]$ ]]
         then
-            sudo apt-get purge openssh-server -y > /dev/null 2>&1
+            apt-get purge openssh-server -y > /dev/null 2>&1
             echo "SSH has been purged."
         fi
     fi
@@ -111,7 +111,7 @@ if [[ $criticalServices =~ .*vsftpd.* ]]
 then
     echo "vsFTPd is identified as a critical service and will not be uninstalled"
 else
-    if [[ $(sudo apt-cache policy vsftpd) =~ .*"Installed: (none)".* ]]
+    if [[ $(apt-cache policy vsftpd) =~ .*"Installed: (none)".* ]]
     then
         echo "vsFTPd is not currently installed and is not a critical service."
     else
@@ -119,7 +119,7 @@ else
         echo
         if [[ $deletionConfirmation =~ ^[Yy]$ ]]
         then
-            sudo apt-get purge vsftpd -y > /dev/null 2>&1
+            apt-get purge vsftpd -y > /dev/null 2>&1
             echo "vsFTPd has been purged."
         fi
     fi
@@ -131,7 +131,7 @@ if [[ $criticalServices =~ .*samba.* ]]
 then
     echo "Samba is identified as a critical service and will not be uninstalled"
 else
-    if [[ $(sudo apt-cache policy samba) =~ .*"Installed: (none)".* ]]
+    if [[ $(apt-cache policy samba) =~ .*"Installed: (none)".* ]]
     then
         echo "Samba is not currently installed and is not a critical service."
     else
@@ -139,7 +139,7 @@ else
         echo
         if [[ $deletionConfirmation =~ ^[Yy]$ ]]
         then
-            sudo apt-get purge samba -y > /dev/null 2>&1
+            apt-get purge samba -y > /dev/null 2>&1
             echo "Samba has been purged."
         fi
     fi
@@ -151,7 +151,7 @@ if [[ $criticalServices =~ .*nginx.* ]]
 then
     echo "Nginx is identified as a critical service and will not be uninstalled"
 else
-    if [[ $(sudo apt-cache policy nginx) =~ .*"Installed: (none)".* ]]
+    if [[ $(apt-cache policy nginx) =~ .*"Installed: (none)".* ]]
     then
         echo "Nginx is not currently installed and is not a critical service."
     else
@@ -159,7 +159,7 @@ else
         echo
         if [[ $deletionConfirmation =~ ^[Yy]$ ]]
         then
-            sudo apt-get purge nginx -y > /dev/null 2>&1
+            apt-get purge nginx -y > /dev/null 2>&1
             echo "Nginx has been purged."
         fi
     fi
@@ -171,7 +171,7 @@ if [[ $criticalServices =~ .*pureftpd.* ]]
 then
     echo "pureftpd is identified as a critical service and will not be uninstalled"
 else
-    if [[ $(sudo apt-cache policy pure-ftpd) =~ .*"Installed: (none)".* ]]
+    if [[ $(apt-cache policy pure-ftpd) =~ .*"Installed: (none)".* ]]
     then
         echo "pureftpd is not currently installed and is not a critical service."
     else
@@ -179,7 +179,7 @@ else
         echo
         if [[ $deletionConfirmation =~ ^[Yy]$ ]]
         then
-            sudo apt-get purge pure-ftpd -y > /dev/null 2>&1
+            apt-get purge pure-ftpd -y > /dev/null 2>&1
             echo "pureftpd has been purged."
         fi
     fi
