@@ -1,32 +1,25 @@
 function f_apache {
-  echo -n "Configuring Apache... "
 
-  sudo apt-get install apache2
+  sudo apt-get install apache2 -y
 
   # Protection Against Fingerprinting
-  echo "Protection Against Fingerprinting"
   sudo sed -i -e 's/ServerSignature On/ServerSignature Off/' $APACHE_CONFIG
   sudo sed -i -e 's/ServerTokens OS/ServerTokens Prod/' $APACHE_CONFIG
 
   # Disabling Directory Listing 
-  echo "Disabling Directory Listing"
   sudo sed -r -i -e 's|^([[:space:]]*)</Directory>|\n\n\1\t# Hardening Related Configurations ===============\n\1</Directory>|g' $APACHE_CONFIG
   sudo sed -r -i -e 's|^([[:space:]]*)</Directory>|\1\tOptions -Indexes\n\1</Directory>|g' $APACHE_CONFIG
+  
   # Disable Server Side Includes and Symbolic Links
-
-  echo "Disable Server Side Includes and Symbolic Links"
   sudo sed -r -i -e 's|^([[:space:]]*)</Directory>|\1\tOptions -Includes\n\1\tOptions -FollowSymLinks\n\1</Directory>|g' $APACHE_CONFIG
 
   # Limit Request Size To Prevent DOS
-  echo "Limit Request Size To Prevent DOS"
   sudo sed -r -i -e 's|^([[:space:]]*)</Directory>|\1\tLimitRequestBody 512000\n\1\tOptions -FollowSymLinks\n\1</Directory>|g' $APACHE_CONFIG 
 
   # Disable Risky HTTP Methods
-  echo "Disable Risky HTTP Methods"
   sudo sed -r -i -e 's|^([[:space:]]*)</Directory>|\n\1\t<LimitExcept GET POST HEAD>\n\1\t\tdeny from all\n\1\t</LimitExcept>\n\n</Directory>|g' $APACHE_CONFIG
 
   # Enable XSS Protection For Modern Browsers
-  echo "Enable XSS Protection For Modern Browsers..."
   sudo echo '' >> $APACHE_CONFIG 
   sudo echo '<IfModule mod_headers.c>' >> $APACHE_CONFIG 
   sudo echo 'Header set X-XSS-Protection 0' >> $APACHE_CONFIG 
@@ -39,6 +32,4 @@ function f_apache {
   sudo ufw allow apache2
   sudo service apache2 enable
   sudo service apache2 restart
-
-  echo "[COMPLETE]"
 }

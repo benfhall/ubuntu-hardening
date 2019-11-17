@@ -1,7 +1,6 @@
 source ~/ubuntu-hardening/readme.cfg
 
 function f_users {
-  echo -n "Configuring account settings... "
 
   #common-passwd / common-auth / login.defs
 
@@ -44,8 +43,13 @@ function f_users {
     if [[ $givenAllUsers =~ $user ]];
     then
       echo "Did not delete user $user."
-      echo "$user:$passwd" | sudo chpasswd
-      echo "Changed password for user $user."
+      if [[ $user =~ $(whoami) ]]
+      then
+        echo "Did not change current user."
+      else
+        echo "$user:$passwd" | sudo chpasswd
+        echo "Changed password for user $user."
+      fi
     else
       read -p "Delete user $user? (y/N) >> " -n 1 -r deletionConfirmation
       echo

@@ -1,5 +1,6 @@
 function f_nginx {
-	echo -n "Configuring nginx... "
+
+	sudo apt-get install nginx -y
 
 	sudo sed -i "s/# server_tokens off;/server_tokens off;/g" /etc/nginx/nginx.conf
 	sudo sed -i 's/server_tokens off;/server_tokens off;\netag off;/' /etc/nginx/nginx.conf
@@ -20,5 +21,4 @@ function f_nginx {
   	sudo service nginx enable
   	sudo service nginx restart
 	
-	echo "[COMPLETE]"
 }

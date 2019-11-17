@@ -1,5 +1,4 @@
 function f_sysctl {
-  echo -n "Configuring network settings... "
 
   # Controls IP packet forwarding
   sudo sysctl -w net.ipv4.ip_forward=0
@@ -70,7 +69,5 @@ function f_sysctl {
   sudo sysctl -w net.ipv6.conf.default.max_addresses=1
 
   sudo sysctl -p
-
-  echo [COMPLETE]
 
 }

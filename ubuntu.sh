@@ -30,6 +30,9 @@ source scripts/pureftpd.sh
 source scripts/purge.sh
 source scripts/malware.sh
 source scripts/filemgt.sh
+source scripts/apparmor.sh
+source scripts/cron.sh
+source scripts/audit.sh
 
 clear
 echo "Ubuntu Hardening Script v.1.0.3 for Ubuntu 14.04"
@@ -75,146 +78,305 @@ read -p "Purge vulnerable software? (y/N) >> " -n 1 -r input_purge
 echo
 read -p "Harden mysql databases? (y/N) >> " -n 1 -r input_mysql
 echo
+read -p "Configure cron? (y/N) >> " -n 1 -r input_cron
+echo
+read -p "Configure apparmor? (y/N) >> " -n 1 -r input_apparmor
+echo
+read -p "Configure audit? (y/N) >> " -n 1 -r input_caudit
+echo
 read -p "Input critical services from README (seperate with spaces) >> " -r criticalServices
 echo
 
 if [[ $criticalServices =~ .*ssh.* ]]
 then
-    echo "SSH not a critical service"
+    echo "SSH is identified as a critical service and will not be uninstalled"
 else
-    read -p "Remove ssh? (y/N) >> " -n 1 -r deletionConfirmation
-    echo
-    if [[ $deletionConfirmation =~ ^[Yy]$ ]]
+    if [[ $(sudo apt-cache policy openssh-server) =~ .*"Installed: (none)".* ]]
     then
-        sudo apt-get purge openssh-server
+        echo "SSH is not currently installed and is not a critical service."
+    else
+        read -p "Remove ssh? (y/N) >> " -n 1 -r deletionConfirmation
+        echo
+        if [[ $deletionConfirmation =~ ^[Yy]$ ]]
+        then
+            sudo apt-get purge openssh-server -y > /dev/null 2>&1
+            echo "SSH has been purged."
+        fi
     fi
 fi
+
+echo
 
 if [[ $criticalServices =~ .*vsftpd.* ]]
 then
-    echo "VSFTPD not a critical service"
+    echo "vsFTPd is identified as a critical service and will not be uninstalled"
 else
-    read -p "Remove vsftpd? (y/N) >> " -n 1 -r deletionConfirmation
-    echo
-    if [[ $deletionConfirmation =~ ^[Yy]$ ]]
+    if [[ $(sudo apt-cache policy vsftpd) =~ .*"Installed: (none)".* ]]
     then
-        sudo apt-get purge vsftpd
+        echo "vsFTPd is not currently installed and is not a critical service."
+    else
+        read -p "Remove vsftpd? (y/N) >> " -n 1 -r deletionConfirmation
+        echo
+        if [[ $deletionConfirmation =~ ^[Yy]$ ]]
+        then
+            sudo apt-get purge vsftpd -y > /dev/null 2>&1
+            echo "vsFTPd has been purged."
+        fi
     fi
 fi
+
+echo
 
 if [[ $criticalServices =~ .*samba.* ]]
 then
-    echo "Samba not a critical service"
+    echo "Samba is identified as a critical service and will not be uninstalled"
 else
-    read -p "Remove samba? (y/N) >> " -n 1 -r deletionConfirmation
-    echo
-    if [[ $deletionConfirmation =~ ^[Yy]$ ]]
+    if [[ $(sudo apt-cache policy samba) =~ .*"Installed: (none)".* ]]
     then
-        sudo apt-get purge samba
+        echo "Samba is not currently installed and is not a critical service."
+    else
+        read -p "Remove samba? (y/N) >> " -n 1 -r deletionConfirmation
+        echo
+        if [[ $deletionConfirmation =~ ^[Yy]$ ]]
+        then
+            sudo apt-get purge samba -y > /dev/null 2>&1
+            echo "Samba has been purged."
+        fi
     fi
 fi
+
+echo
 
 if [[ $criticalServices =~ .*nginx.* ]]
 then
-    echo "Nginx not a critical service"
+    echo "Nginx is identified as a critical service and will not be uninstalled"
 else
-    read -p "Remove nginx? (y/N) >> " -n 1 -r deletionConfirmation
-    echo
-    if [[ $deletionConfirmation =~ ^[Yy]$ ]]
+    if [[ $(sudo apt-cache policy nginx) =~ .*"Installed: (none)".* ]]
     then
-        sudo apt-get purge nginx
+        echo "Nginx is not currently installed and is not a critical service."
+    else
+        read -p "Remove nginx? (y/N) >> " -n 1 -r deletionConfirmation
+        echo
+        if [[ $deletionConfirmation =~ ^[Yy]$ ]]
+        then
+            sudo apt-get purge nginx -y > /dev/null 2>&1
+            echo "Nginx has been purged."
+        fi
     fi
 fi
 
+echo
+
+if [[ $criticalServices =~ .*pureftpd.* ]]
+then
+    echo "pureftpd is identified as a critical service and will not be uninstalled"
+else
+    if [[ $(sudo apt-cache policy pure-ftpd) =~ .*"Installed: (none)".* ]]
+    then
+        echo "pureftpd is not currently installed and is not a critical service."
+    else
+        read -p "Remove pureftpd? (y/N) >> " -n 1 -r deletionConfirmation
+        echo
+        if [[ $deletionConfirmation =~ ^[Yy]$ ]]
+        then
+            sudo apt-get purge pure-ftpd -y > /dev/null 2>&1
+            echo "pureftpd has been purged."
+        fi
+    fi
+fi
+
+echo
+
 if [[ $input_apt =~ ^[Yy]$ ]]
 then
-    f_apt
+    echo -ne "Configuring apt... \r"
+    f_apt > /dev/null 2>&1
+    echo -e "Configuring apt... [COMPLETE]\r"
 fi
+
+echo
 
 if [[ $input_firewall =~ ^[Yy]$ ]]
 then
-    f_ufw
+    echo -ne "Configuring ufw... \r"
+    f_ufw > /dev/null 2>&1
+    echo -e "Configuring ufw... [COMPLETE]\r"
 fi
+
+echo
 
 if [[ $input_users =~ ^[Yy]$ ]]
 then
-    f_users
+    echo -ne "Configuring account settings... \r"
+    f_users > /dev/null 2>&1
+    echo -e "Configuring account settings... [COMPLETE]\r"
 fi
+
+echo
 
 if [[ $input_hosts =~ ^[Yy]$ ]]
 then
-    f_hosts
+    echo -ne "Configuring hosts file... \r"
+    f_hosts > /dev/null 2>&1
+    echo -e "Configuring hosts file... [COMPLETE]\r"
 fi
+
+echo
 
 if [[ $input_files =~ ^[Yy]$ ]]
 then
-    f_filemgt
+    echo -ne "Removing media files... \r"
+    f_filemgt > /dev/null 2>&1
+    echo -e "Removing media files... [COMPLETE]\r"
 fi
+
+echo
 
 if [[ $input_sysctl =~ ^[Yy]$ ]]
 then
-    f_sysctl
+    echo -ne "Configuring network settings... \r"
+    f_sysctl > /dev/null 2>&1
+    echo -e "Configuring network settings... [COMPLETE]\r"
 fi
+
+echo
 
 if [[ $input_banners =~ ^[Yy]$ ]]
 then
-    f_banners
+    echo -ne "Configuring banners... \r"
+    f_banners > /dev/null 2>&1
+    echo -n "Configuring banners... [COMPLETE]\r"
 fi
+
+echo
 
 if [[ $input_sudo =~ ^[Yy]$ ]]
 then
-    f_sudo
+    echo -ne "Configuring hosts file... \r"
+    f_sudo > /dev/null 2>&1
+    echo -n "Configuring banners... [COMPLETE]\r"
 fi
+
+echo
 
 if [[ $input_processes =~ ^[Yy]$ ]]
 then
-    f_process
+    echo -ne "Configuring hosts file... \r"
+    f_process > /dev/null 2>&1
+    echo -n "Configuring banners... [COMPLETE]\r"
 fi
+
+echo
 
 if [[ $input_aide =~ ^[Yy]$ ]]
 then
-    f_aide
+    echo -ne "Configuring hosts file... \r"
+    f_aide > /dev/null 2>&1
+    echo -n "Configuring banners... [COMPLETE]\r"
 fi
+
+echo
 
 if [[ $input_perm =~ ^[Yy]$ ]]
 then
-    f_perm
+    echo -ne "Configuring permissions... \r"
+    f_perm > /dev/null 2>&1
+    echo -n "Configuring permissions... [COMPLETE]\r"
 fi
+
+echo
 
 if [[ $input_malware =~ ^[Yy]$ ]]
 then
-    f_malware
+    echo -ne "Removing potential malware... \r"
+    f_malware > /dev/null 2>&1
+    echo -n "Removing potential malware... [COMPLETE]\r"
 fi
+
+echo
 
 if [[ $input_purge =~ ^[Yy]$ ]]
 then
-  f_purge
+    echo -ne "Purging non-server applications... \r"
+    f_purge > /dev/null 2>&1
+    echo -n "Purging non-server applications... [COMPLETE]\r"
 fi
+
+echo
 
 if [[ $input_mysql =~ ^[Yy]$ ]]
 then
-  f_mysql
+    echo -ne "Configuring mysql databases... \r"
+    f_mysql > /dev/null 2>&1
+    echo -n "Configuring mysql databases... [COMPLETE]\r"
 fi
+
+echo
 
 if [[ $CRITICALSERVICES =~ .*ssh.* ]]
 then
-    f_ssh
+    echo -ne "Configuring ssh... \r"
+    f_ssh > /dev/null 2>&1
+    echo -n "Configuring ssh... [COMPLETE]\r"
 fi
+
+echo
 
 if [[ $CRITICALSERVICES =~ .*vsftpd.* ]]
 then
-    f_vsftpd
+    echo -ne "Configuring vsftpd... \r"
+    f_vsftpd > /dev/null 2>&1
+    echo -n "Configuring vsftpd... [COMPLETE]\r"
 fi
+
+echo
 
 if [[ $CRITICALSERVICES =~ .*nginx.* ]]
 then
-    f_nginx
+    echo -ne "Configuring nginx... \r"
+    f_nginx > /dev/null 2>&1
+    echo -n "Configuring nginx... [COMPLETE]\r"
 fi
+
+echo
 
 if [[ $CRITICALSERVICES =~ .*samba.* ]]
 then
-    f_samba
+    echo -ne "Configuring samba... \r"
+    f_samba > /dev/null 2>&1
+    echo -n "Configuring samba... [COMPLETE]\r"
 fi
+
+if [[ $CRITICALSERVICES =~ .*pureftpd.* ]]
+then
+    echo -ne "Configuring pureftpd... \r"
+    f_pureftpd > /dev/null 2>&1
+    echo -n "Configuring pureftpd... [COMPLETE]\r"
+fi
+
+if [[ $input_apparmor =~ ^[Yy]$ ]]
+then
+    echo -ne "Configuring apparmor... \r"
+    f_apparmor > /dev/null 2>&1
+    echo -n "Configuring apparmor... [COMPLETE]\r"
+fi
+
+if [[ $input_cron =~ ^[Yy]$ ]]
+then
+    echo -ne "Configuring cron... \r"
+    f_cron > /dev/null 2>&1
+    echo -n "Configuring cron... [COMPLETE]\r"
+fi
+
+if [[ $input_audit =~ ^[Yy]$ ]]
+then
+    echo -ne "Configuring audit... \r"
+    f_audit > /dev/null 2>&1
+    echo -n "Configuring audit... [COMPLETE]\r"
+fi
+
+
+
 
 echo "Ubuntu Hardening Script finished!"
 echo -n "Press any button to exit."

@@ -1,5 +1,6 @@
 function f_samba {
-    echo -n "Configuring Samba... "
+
+    sudo apt-get install samba  -y
 
     sudo echo "hosts allow = 127.0.0.1" >> /etc/samba/smb.conf
     sudo echo "hosts deny = 0.0.0.0/0" >> /etc/samba/smb.conf
@@ -10,6 +11,5 @@ function f_samba {
     sudo ufw allow samba
     sudo service samba enable
     sudo service samba restart
-    
-    echo "[COMPLETE]"
+
 }
