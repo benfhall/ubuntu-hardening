@@ -31,6 +31,7 @@ source scripts/purge.sh
 source scripts/malware.sh
 source scripts/filemgt.sh
 
+clear
 echo "Ubuntu Hardening Script v.1.0.3 for Ubuntu 14.04"
 echo "Created by Ben Hall"
 echo "Note: Designed for CyberPatriots! Any use within the CyberPatriots competition will disqualify you!"
@@ -38,26 +39,43 @@ read -p "Press any key to continue... " -n 1
 echo
 
 read -p "Configure/Install apt? (y/N) >> " -n 1 -r input_apt
+echo
 read -p "Configure the firewall? (y/N) >> " -n 1 -r input_firewall
+echo
 read -p "Configure user settings? (y/N) >> " -n 1 -r input_users
+echo
 if [[ $input_users =~ ^[Yy]$ ]]
 then
     read -p "Input admins in README (seperate with spaces) >> " -r givenAdmins
+    echo
     read -p "Input users in README (seperate with spaces) >> " -r givenUsers
+    echo
     read -p "Input general password >>" -r passwd
+    echo
 fi
 read -p "Configure hosts file? (y/N) >> " -n 1 -r input_hosts
+echo
 read -p "Delete media files? (y/N) >> " -n 1 -r input_files
 read -p "Configure sysctl? (y/N) >> " -n 1 -r input_sysctl
+echo
 read -p "Edit banners? (y/N) >> " -n 1 -r input_banners
+echo
 read -p "Configure sudo? (y/N) >> " -n 1 -r input_sudo
+echo
 read -p "Harden processes? (y/N) >> " -n 1 -r input_processes
+echo
 read -p "Configure AIDE? (y/N) >> " -n 1 -r input_aide
+echo
 read -p "Configure permissions? (y/N) >> " -n 1 -r input_perm
+echo
 read -p "Uninstall malicious software? (y/N) >> " -n 1 -r input_malware
+echo
 read -p "Purge vulnerable software? (y/N) >> " -n 1 -r input_purge
+echo
 read -p "Harden mysql databases? (y/N) >> " -n 1 -r input_mysql
+echo
 read -p "Input critical services from README (seperate with spaces) >> " -r criticalServices
+echo
 
 if [[ $criticalServices =~ .*ssh.* ]]
 then
