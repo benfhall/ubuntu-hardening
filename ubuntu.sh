@@ -56,6 +56,7 @@ fi
 read -p "Configure hosts file? (y/N) >> " -n 1 -r input_hosts
 echo
 read -p "Delete media files? (y/N) >> " -n 1 -r input_files
+echo
 read -p "Configure sysctl? (y/N) >> " -n 1 -r input_sysctl
 echo
 read -p "Edit banners? (y/N) >> " -n 1 -r input_banners

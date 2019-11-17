@@ -3,34 +3,17 @@ source ~/ubuntu-hardening/readme.cfg
 function f_users {
   echo -n "Configuring account settings... "
 
-  #common-password/auth
-  if ! grep pam_pwhistory.so /etc/pam.d/common-password; then
-    sed -i '/the "Primary" block/apassword\trequired\t\t\tpam_pwhistory.so\tremember=5' /etc/pam.d/common-password
-  fi
+  #common-passwd / common-auth / login.defs
 
-  sed -i 's/^password[\t].*.pam_cracklib.*/password\trequired\t\t\tpam_cracklib.so retry=3 maxrepeat=3 minlen=8 dcredit=-1 ucredit=-1 ocredit=-1 lcredit=-1 difok=8/' /etc/pam.d/common-password
-  sed -i 's/try_first_pass sha512.*/try_first_pass sha512/' /etc/pam.d/common-password
-  sed -i 's/nullok_secure//' /etc/pam.d/common-auth
+  sudo mv /etc/pam.d/common-auth  /etc/pam.d/login.defs.old
+  sudo mv ~/ubuntu-hardening/defaults/login.defs /etc/pam.d/login.defs
 
-  if ! grep tally2 /etc/pam.d/common-auth; then
-    sed -i '/^$/a auth required pam_tally2.so onerr=fail audit silent deny=5 unlock_time=900' /etc/pam.d/common-auth
-    sed -i '/pam_tally/d' /etc/pam.d/common-account
-    echo 'account required pam_tally2.so' >> /etc/pam.d/common-account
-  fi
+  sudo mv /etc/pam.d/common-password  /etc/pam.d/common-password.old
+  sudo mv ~/ubuntu-hardening/defaults/common-password /etc/pam.d/common-password
 
-  sed -i 's/pam_lastlog.so.*/pam_lastlog.so showfailed/' /etc/pam.d/login
-  sed -i 's/delay=.*/delay=4000000/' /etc/pam.d/login
+  sudo mv /etc/login.defs  /etc/login.defs.old
+  sudo mv ~/ubuntu-hardening/defaults/login.defs /etc/login.defs
 
-  #login.defs
-  sed -i 's/^.*LOG_OK_LOGINS.*/LOG_OK_LOGINS yes/' /etc/login.defs
-  sed -i 's/^UMASK.*/UMASK 077/' /etc/login.defs
-  sed -i 's/^PASS_MIN_DAYS.*/PASS_MIN_DAYS 1/' /etc/login.defs
-  sed -i 's/^PASS_MAX_DAYS.*/PASS_MAX_DAYS 60/' /etc/login.defs
-  sed -i 's/DEFAULT_HOME.*/DEFAULT_HOME no/' /etc/login.defs
-  sed -i 's/ENCRYPT_METHOD.*/ENCRYPT_METHOD SHA512/' /etc/login.defs
-  sed -i 's/USERGROUPS_ENAB.*/USERGROUPS_ENAB no/' /etc/login.defs
-  sed -i 's/^# SHA_CRYPT_MAX_ROUNDS.*/SHA_CRYPT_MAX_ROUNDS 10000/' /etc/login.defs
-  
   #disable guest account
   sudo echo "allow-guest=false" >> /etc/lightdm/lightdm.conf
 
@@ -51,7 +34,6 @@ function f_users {
   done
 
   #ask for user info
-  
   givenAllUsers="$givenAdmins $givenUsers"
   sysUsers="$(ls /home)"
   sysAdmins=$(getent group sudo | cut -d: -f4 | tr ',' ' ')
