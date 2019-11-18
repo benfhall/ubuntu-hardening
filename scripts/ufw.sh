@@ -5,6 +5,4 @@ function f_ufw {
   ufw reset
   ufw enable
 
-  service ufw restart
-
 }

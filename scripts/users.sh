@@ -8,10 +8,10 @@ function f_users {
   mv defaults/login.defs /etc/pam.d/login.defs
 
   mv /etc/pam.d/common-password  /etc/pam.d/common-password.old
-  mv /defaults/common-password /etc/pam.d/common-password
+  mv defaults/common-password /etc/pam.d/common-password
 
-  mv /etc/login.defs  /etc/login.defs.old
-  mv defaults/login.defs /etc/login.defs
+  mv /etc/pam.d/common-auth  /etc/pam.d/common-auth.old
+  mv defaults/common-auth /etc/pam.d/common-auth
 
   #disable guest account
   echo "allow-guest=false" >> /etc/lightdm/lightdm.conf
