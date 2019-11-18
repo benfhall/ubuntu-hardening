@@ -41,6 +41,17 @@ read -p "Press any key to continue... " -n 1
 echo
 
 clear
+read -p "Keep backup file of scoring report? (y/N) >> " -n 1 -r input_backup
+echo
+
+if [[ $input_backup =~ ^[Yy]$ ]]
+then
+    read -p "What is the location of the scoring report? (y/N) >> " -r backup_location
+    echo
+    crontab -e */5 * * * * cp -f $backup_location scoring_report.log
+fi
+
+clear
 read -p "Configure/Install apt? (y/N) >> " -n 1 -r input_apt
 echo
 clear
