@@ -2,6 +2,8 @@ function f_users {
 
   #common-passwd / common-auth / login.defs
 
+  apt-get install libpam-cracklib -y
+
   mv /etc/pam.d/common-auth  /etc/pam.d/login.defs.old
   mv ~/ubuntu-hardening/defaults/login.defs /etc/pam.d/login.defs
 
