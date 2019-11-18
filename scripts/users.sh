@@ -5,13 +5,13 @@ function f_users {
   apt-get install libpam-cracklib -y
 
   mv /etc/pam.d/common-auth  /etc/pam.d/login.defs.old
-  mv ~/ubuntu-hardening/defaults/login.defs /etc/pam.d/login.defs
+  mv defaults/login.defs /etc/pam.d/login.defs
 
   mv /etc/pam.d/common-password  /etc/pam.d/common-password.old
-  mv ~/ubuntu-hardening/defaults/common-password /etc/pam.d/common-password
+  mv /defaults/common-password /etc/pam.d/common-password
 
   mv /etc/login.defs  /etc/login.defs.old
-  mv ~/ubuntu-hardening/defaults/login.defs /etc/login.defs
+  mv defaults/login.defs /etc/login.defs
 
   #disable guest account
   echo "allow-guest=false" >> /etc/lightdm/lightdm.conf

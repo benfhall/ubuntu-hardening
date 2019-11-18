@@ -231,172 +231,172 @@ echo
 
 if [[ $input_users =~ ^[Yy]$ ]]
 then
-    echo -ne "Configuring account settings... \r"
+    echo -ne "Configuring account settings... "
     f_users
-    echo -e "Configuring account settings... [COMPLETE]\r"
+    echo -e "Configuring account settings... [COMPLETE]"
 fi
 
 echo
 
 if [[ $input_hosts =~ ^[Yy]$ ]]
 then
-    echo -ne "Configuring hosts file... \r"
+    echo -ne "Configuring hosts file... "
     f_hosts > /dev/null 2>&1
-    echo -e "Configuring hosts file... [COMPLETE]\r"
+    echo -e "Configuring hosts file... [COMPLETE]"
 fi
 
 echo
 
 if [[ $input_files =~ ^[Yy]$ ]]
 then
-    echo -ne "Removing media files... \r"
+    echo -ne "Removing media files... "
     f_filemgt > /dev/null 2>&1
-    echo -e "Removing media files... [COMPLETE]\r"
+    echo -e "Removing media files... [COMPLETE]"
 fi
 
 echo
 
 if [[ $input_sysctl =~ ^[Yy]$ ]]
 then
-    echo -ne "Configuring network settings... \r"
+    echo -ne "Configuring network settings... "
     f_sysctl > /dev/null 2>&1
-    echo -e "Configuring network settings... [COMPLETE]\r"
+    echo -e "Configuring network settings... [COMPLETE]"
 fi
 
 echo
 
 if [[ $input_banners =~ ^[Yy]$ ]]
 then
-    echo -ne "Configuring banners... \r"
+    echo -ne "Configuring banners... "
     f_banners > /dev/null 2>&1
-    echo -n "Configuring banners... [COMPLETE]\r"
+    echo -n "Configuring banners... [COMPLETE]"
 fi
 
 echo
 
 if [[ $input_sudo =~ ^[Yy]$ ]]
 then
-    echo -ne "Configuring hosts file... \r"
+    echo -ne "Configuring sudo... "
     f_sudo > /dev/null 2>&1
-    echo -n "Configuring banners... [COMPLETE]\r"
+    echo -n "Configuring sudo... [COMPLETE]"
 fi
 
 echo
 
 if [[ $input_processes =~ ^[Yy]$ ]]
 then
-    echo -ne "Configuring hosts file... \r"
+    echo -ne "Hardening processes... "
     f_process > /dev/null 2>&1
-    echo -n "Configuring banners... [COMPLETE]\r"
+    echo -n "Hardening processes... [COMPLETE]"
 fi
 
 echo
 
 if [[ $input_aide =~ ^[Yy]$ ]]
 then
-    echo -ne "Configuring hosts file... \r"
+    echo -ne "Configuring aide... "
     f_aide > /dev/null 2>&1
-    echo -n "Configuring banners... [COMPLETE]\r"
+    echo -n "Configuring aide... [COMPLETE]"
 fi
 
 echo
 
 if [[ $input_perm =~ ^[Yy]$ ]]
 then
-    echo -ne "Configuring permissions... \r"
+    echo -ne "Configuring permissions... "
     f_perm > /dev/null 2>&1
-    echo -n "Configuring permissions... [COMPLETE]\r"
+    echo -n "Configuring permissions... [COMPLETE]"
 fi
 
 echo
 
 if [[ $input_malware =~ ^[Yy]$ ]]
 then
-    echo -ne "Removing potential malware... \r"
+    echo -ne "Removing potential malware... "
     f_malware > /dev/null 2>&1
-    echo -n "Removing potential malware... [COMPLETE]\r"
+    echo -n "Removing potential malware... [COMPLETE]"
 fi
 
 echo
 
 if [[ $input_purge =~ ^[Yy]$ ]]
 then
-    echo -ne "Purging non-server applications... \r"
+    echo -ne "Purging non-server applications... "
     f_purge > /dev/null 2>&1
-    echo -n "Purging non-server applications... [COMPLETE]\r"
+    echo -n "Purging non-server applications... [COMPLETE]"
 fi
 
 echo
 
 if [[ $input_mysql =~ ^[Yy]$ ]]
 then
-    echo -ne "Configuring mysql databases... \r"
+    echo -ne "Configuring mysql databases... "
     f_mysql > /dev/null 2>&1
-    echo -n "Configuring mysql databases... [COMPLETE]\r"
+    echo -n "Configuring mysql databases... [COMPLETE]"
 fi
 
 echo
 
 if [[ $CRITICALSERVICES =~ .*ssh.* ]]
 then
-    echo -ne "Configuring ssh... \r"
+    echo -ne "Configuring ssh... "
     f_ssh > /dev/null 2>&1
-    echo -n "Configuring ssh... [COMPLETE]\r"
+    echo -n "Configuring ssh... [COMPLETE]"
 fi
 
 echo
 
 if [[ $CRITICALSERVICES =~ .*vsftpd.* ]]
 then
-    echo -ne "Configuring vsftpd... \r"
+    echo -ne "Configuring vsftpd... "
     f_vsftpd > /dev/null 2>&1
-    echo -n "Configuring vsftpd... [COMPLETE]\r"
+    echo -n "Configuring vsftpd... [COMPLETE]"
 fi
 
 echo
 
 if [[ $CRITICALSERVICES =~ .*nginx.* ]]
 then
-    echo -ne "Configuring nginx... \r"
+    echo -ne "Configuring nginx... "
     f_nginx > /dev/null 2>&1
-    echo -n "Configuring nginx... [COMPLETE]\r"
+    echo -n "Configuring nginx... [COMPLETE]"
 fi
 
 echo
 
 if [[ $CRITICALSERVICES =~ .*samba.* ]]
 then
-    echo -ne "Configuring samba... \r"
+    echo -ne "Configuring samba... "
     f_samba > /dev/null 2>&1
-    echo -n "Configuring samba... [COMPLETE]\r"
+    echo -n "Configuring samba... [COMPLETE]"
 fi
 
 if [[ $CRITICALSERVICES =~ .*pureftpd.* ]]
 then
-    echo -ne "Configuring pureftpd... \r"
+    echo -ne "Configuring pureftpd... "
     f_pureftpd > /dev/null 2>&1
-    echo -n "Configuring pureftpd... [COMPLETE]\r"
+    echo -n "Configuring pureftpd... [COMPLETE]"
 fi
 
 if [[ $input_apparmor =~ ^[Yy]$ ]]
 then
-    echo -ne "Configuring apparmor... \r"
+    echo -ne "Configuring apparmor... "
     f_apparmor > /dev/null 2>&1
-    echo -n "Configuring apparmor... [COMPLETE]\r"
+    echo -n "Configuring apparmor... [COMPLETE]"
 fi
 
 if [[ $input_cron =~ ^[Yy]$ ]]
 then
-    echo -ne "Configuring cron... \r"
+    echo -ne "Configuring cron... "
     f_cron > /dev/null 2>&1
-    echo -n "Configuring cron... [COMPLETE]\r"
+    echo -n "Configuring cron... [COMPLETE]"
 fi
 
 if [[ $input_audit =~ ^[Yy]$ ]]
 then
-    echo -ne "Configuring audit... \r"
+    echo -ne "Configuring audit... "
     f_audit > /dev/null 2>&1
-    echo -n "Configuring audit... [COMPLETE]\r"
+    echo -n "Configuring audit... [COMPLETE]"
 fi
 
 
