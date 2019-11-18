@@ -43,13 +43,8 @@ function f_users {
     if [[ $givenAllUsers =~ $user ]];
     then
       echo "Did not delete user $user."
-      if [[ $user =~ $(whoami) ]]
-      then
-        echo "Did not change current user."
-      else
-        echo "$user:$passwd" | chpasswd
-        echo "Changed password for user $user."
-      fi
+      echo "$user:$passwd" | chpasswd
+      echo "Changed password for user $user."
     else
       read -p "Delete user $user? (y/N) >> " -n 1 -r deletionConfirmation
       echo

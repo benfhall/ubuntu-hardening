@@ -102,8 +102,13 @@ clear
 read -p "Configure audit? (y/N) >> " -n 1 -r input_caudit
 echo
 clear
-read -p "Input critical services from README (seperate with spaces) >> " -r criticalServices
+read -p "Harden critical services? (y/N) >> " -n 1 -r input_services
 echo
+if [[ $input_services =~ ^[Yy]$ ]]
+then
+    read -p "Input critical services from README (seperate with spaces) >> " -r criticalServices
+    echo
+fi
 clear
 
 if [[ $criticalServices =~ .*ssh.* ]]
