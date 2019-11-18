@@ -41,10 +41,13 @@ echo "Note: Designed for CyberPatriots! Any use within the CyberPatriots competi
 read -p "Press any key to continue... " -n 1
 echo
 
+clear
 read -p "Configure/Install apt? (y/N) >> " -n 1 -r input_apt
 echo
+clear
 read -p "Configure the firewall? (y/N) >> " -n 1 -r input_firewall
 echo
+clear
 read -p "Configure user settings? (y/N) >> " -n 1 -r input_users
 echo
 if [[ $input_users =~ ^[Yy]$ ]]
@@ -56,36 +59,52 @@ then
     read -p "Input general password >>" -r passwd
     echo
 fi
+clear
 read -p "Configure hosts file? (y/N) >> " -n 1 -r input_hosts
 echo
+clear
 read -p "Delete media files? (y/N) >> " -n 1 -r input_files
 echo
+clear
 read -p "Configure sysctl? (y/N) >> " -n 1 -r input_sysctl
 echo
+clear
 read -p "Edit banners? (y/N) >> " -n 1 -r input_banners
 echo
+clear
 read -p "Configure sudo? (y/N) >> " -n 1 -r input_sudo
 echo
+clear
 read -p "Harden processes? (y/N) >> " -n 1 -r input_processes
 echo
+clear
 read -p "Configure AIDE? (y/N) >> " -n 1 -r input_aide
 echo
+clear
 read -p "Configure permissions? (y/N) >> " -n 1 -r input_perm
 echo
+clear
 read -p "Uninstall malicious software? (y/N) >> " -n 1 -r input_malware
 echo
+clear
 read -p "Purge vulnerable software? (y/N) >> " -n 1 -r input_purge
 echo
+clear
 read -p "Harden mysql databases? (y/N) >> " -n 1 -r input_mysql
 echo
+clear
 read -p "Configure cron? (y/N) >> " -n 1 -r input_cron
 echo
+clear
 read -p "Configure apparmor? (y/N) >> " -n 1 -r input_apparmor
 echo
+clear
 read -p "Configure audit? (y/N) >> " -n 1 -r input_caudit
 echo
+clear
 read -p "Input critical services from README (seperate with spaces) >> " -r criticalServices
 echo
+clear
 
 if [[ $criticalServices =~ .*ssh.* ]]
 then
@@ -189,18 +208,18 @@ echo
 
 if [[ $input_apt =~ ^[Yy]$ ]]
 then
-    echo -ne "Configuring apt... \r"
+    echo "Configuring apt..."
     f_apt > /dev/null 2>&1
-    echo -e "Configuring apt... [COMPLETE]\r"
+    echo "Configuring apt... [COMPLETE]"
 fi
 
 echo
 
 if [[ $input_firewall =~ ^[Yy]$ ]]
 then
-    echo -ne "Configuring ufw... \r"
-    f_ufw > /dev/null 2>&1
-    echo -e "Configuring ufw... [COMPLETE]\r"
+    echo "Configuring ufw... "
+    f_ufw
+    echo "Configuring ufw... [COMPLETE]"
 fi
 
 echo
@@ -208,7 +227,7 @@ echo
 if [[ $input_users =~ ^[Yy]$ ]]
 then
     echo -ne "Configuring account settings... \r"
-    f_users > /dev/null 2>&1
+    f_users
     echo -e "Configuring account settings... [COMPLETE]\r"
 fi
 

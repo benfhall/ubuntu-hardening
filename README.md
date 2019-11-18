@@ -23,8 +23,3 @@ Simple Checklist:
 - Set updates to daily, notify, and immediate
 - Delete media files
 - Look at open ports
-
-WiP:
-- Nginx configuration script
-- Samba configuration script
--
