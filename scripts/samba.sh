@@ -7,9 +7,6 @@ function f_samba {
     echo "interfaces = eth* lo" >> /etc/samba/smb.conf
     echo "bind interfaces only = yes" >> /etc/samba/smb.conf
 
-    service samba restart
     ufw allow samba
-    service samba enable
-    service samba restart
 
 }

@@ -7,11 +7,6 @@ function f_vsftpd {
   chown root:root /etc/vsftpd.conf
   chmod 0600 /etc/vsftpd.conf
 
-  service vsftpd restart
-
   ufw allow vsftpd
-
-  service vsftpd enable
-  service vsftpd restart
 
 }

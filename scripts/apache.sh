@@ -30,6 +30,4 @@ function f_apache {
   chmod -R 750 /etc/httpd/conf /etc/httpd/bin >/dev/null 2>&1 &
 
   ufw allow apache2
-  service apache2 enable
-  service apache2 restart
 }

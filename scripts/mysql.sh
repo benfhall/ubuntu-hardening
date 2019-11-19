@@ -20,10 +20,6 @@ function f_mysql {
 
     mysql_secure_installation
 
-    service mysql restart
   	ufw allow mysql
-  	service mysql enable
-  	service mysql restart
-
 
 }

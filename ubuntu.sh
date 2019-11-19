@@ -34,9 +34,25 @@ source scripts/cron.sh
 source scripts/audit.sh
 
 clear
-echo "Ubuntu Hardening Script v.1.0.3 for Ubuntu 14.04"
+echo "Ubuntu Hardening Script v.1.0.3 for Ubuntu 14.04 and 16.04"
 echo "Created by Ben Hall"
 echo "Note: Designed for CyberPatriots! Any use within the CyberPatriots competition will disqualify you!"
+
+version=$(lsb_release -a) 
+
+if [[ $version =~ .*14.04* ]]
+then
+    echo "RUNNING 14.04 SCRIPT"
+else
+    if [[ $version =~ .*16.04* ]]
+    then
+        echo "RUNNING 16.04 SCRIPT"
+    else
+        echo "UNKNOWN VERSION! ENDING SCRIPT"
+        exit
+    fi
+fi
+
 read -p "Press any key to continue... " -n 1
 echo
 
@@ -339,7 +355,21 @@ if [[ $input_mysql =~ ^[Yy]$ ]]
 then
     echo -ne "Configuring mysql databases... \r"
     f_mysql > /dev/null 2>&1
+
+    if [[ $version =~ .*14.04* ]]
+    then
+        sudo service mysql stop
+        sudo service mysql start
+    else
+        if [[ $version =~ .*16.04* ]]
+        then
+            sudo systemctl enable mysql.service
+            sudo systemctl reload-or-restart mysql.service
+        fi
+    fi
+
     echo -n "Configuring mysql databases... [COMPLETE]"
+
 fi
 
 echo
@@ -348,7 +378,23 @@ if [[ $CRITICALSERVICES =~ .*ssh.* ]]
 then
     echo -ne "Configuring ssh... \r"
     f_ssh > /dev/null 2>&1
+
+    if [[ $version =~ .*14.04* ]]
+    then
+        sudo service ssh stop
+        sudo service ssh start
+    else
+        if [[ $version =~ .*16.04* ]]
+        then
+            sudo systemctl enable ssh.service
+            sudo systemctl reload-or-restart ssh.service
+            sudo systemctl enable sshd.service
+            sudo systemctl reload-or-restart sshd.service
+        fi
+    fi
+
     echo -n "Configuring ssh... [COMPLETE]"
+    
 fi
 
 echo
@@ -357,6 +403,19 @@ if [[ $CRITICALSERVICES =~ .*vsftpd.* ]]
 then
     echo -ne "Configuring vsftpd... \r"
     f_vsftpd > /dev/null 2>&1
+
+    if [[ $version =~ .*14.04* ]]
+    then
+        sudo service vsftpd stop
+        sudo service vsftpd start
+    else
+        if [[ $version =~ .*16.04* ]]
+        then
+            sudo systemctl enable vsftpd.service
+            sudo systemctl reload-or-restart vsftpd.service
+        fi
+    fi
+
     echo -n "Configuring vsftpd... [COMPLETE]"
 fi
 
@@ -366,6 +425,19 @@ if [[ $CRITICALSERVICES =~ .*nginx.* ]]
 then
     echo -ne "Configuring nginx... \r"
     f_nginx > /dev/null 2>&1
+
+    if [[ $version =~ .*14.04* ]]
+    then
+        sudo service nginx stop
+        sudo service nginx start
+    else
+        if [[ $version =~ .*16.04* ]]
+        then
+            sudo systemctl enable nginx.service
+            sudo systemctl reload-or-restart nginx.service
+        fi
+    fi
+
     echo -n "Configuring nginx... [COMPLETE]"
 fi
 
@@ -375,6 +447,19 @@ if [[ $CRITICALSERVICES =~ .*samba.* ]]
 then
     echo -ne "Configuring samba... \r"
     f_samba > /dev/null 2>&1
+
+    if [[ $version =~ .*14.04* ]]
+    then
+        sudo service samba stop
+        sudo service samba start
+    else
+        if [[ $version =~ .*16.04* ]]
+        then
+            sudo systemctl enable samba.service
+            sudo systemctl reload-or-restart samba.service
+        fi
+    fi
+
     echo -n "Configuring samba... [COMPLETE]"
 fi
 
@@ -382,6 +467,19 @@ if [[ $CRITICALSERVICES =~ .*pureftpd.* ]]
 then
     echo -ne "Configuring pureftpd... \r"
     f_pureftpd > /dev/null 2>&1
+
+    if [[ $version =~ .*14.04* ]]
+    then
+        sudo service pure-ftpd stop
+        sudo service pure-ftpd start
+    else
+        if [[ $version =~ .*16.04* ]]
+        then
+            sudo systemctl enable pure-ftpd.service
+            sudo systemctl reload-or-restart pure-ftpd.service
+        fi
+    fi
+
     echo -n "Configuring pureftpd... [COMPLETE]"
 fi
 
@@ -389,6 +487,19 @@ if [[ $input_apparmor =~ ^[Yy]$ ]]
 then
     echo -ne "Configuring apparmor... \r"
     f_apparmor > /dev/null 2>&1
+
+    if [[ $version =~ .*14.04* ]]
+    then
+        sudo service apparmor stop
+        sudo service apparmor start
+    else
+        if [[ $version =~ .*16.04* ]]
+        then
+            sudo systemctl enable apparmor.service
+            sudo systemctl reload-or-restart apparmor.service
+        fi
+    fi
+
     echo -n "Configuring apparmor... [COMPLETE]"
 fi
 

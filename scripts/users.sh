@@ -14,8 +14,7 @@ function f_users {
   mv defaults/common-auth /etc/pam.d/common-auth
 
   #disable guest account
-  echo "allow-guest=false" >> /etc/lightdm/lightdm.conf
-
+  echo "allow-guest=false" >> /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
   passwd -l root
 
   #restrict sudo

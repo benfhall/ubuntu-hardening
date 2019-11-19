@@ -8,12 +8,7 @@ function f_ssh {
   chown root:root /etc/ssh/sshd_config
   chmod 0600 /etc/ssh/sshd_config
 
-  service ssh restart
-
   ufw allow ssh
   ufw allow 22
-
-  service ssh enable
-  service ssh restart
 
 }

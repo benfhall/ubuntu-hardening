@@ -16,9 +16,6 @@ function f_nginx {
 	sed -i "s|root /var/www/html;|root /var/www/html;\nadd_header Content-Security-Policy \"default-src 'self';\";|" /etc/nginx/sites-available/default
 	sed -i "s|root /var/www/html;|root /var/www/html;\nadd_header X-Robots-Tag none;|" /etc/nginx/sites-available/default
 
-	service nginx restart
   	ufw allow nginx
-  	service nginx enable
-  	service nginx restart
 	
 }
