@@ -1,7 +1,6 @@
 function f_purge {
 
   apt-get remove nis -y
-  sed -i 's/RSYNC_ENABLE=.*/RSYNC_ENABLE=false'
   apt-get remove rsh-client rsh-redone-client -y
   apt-get remove talk -y
   apt-get remove telnet -y

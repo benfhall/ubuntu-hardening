@@ -7,31 +7,33 @@
 # PLAT:  linux-64
 # PLAT-Version: linux-14.04
 
+exec 3>&1 4>&2
+trap 'exec 2>&4 1>&3' 0 1 2 3
+exec 1>log.out 2>&1
+
 chmod 755 scripts -R #ensure source can access modules
 
-source scripts/apt.sh
-source scripts/ufw.sh
-source scripts/users.sh
-source scripts/sysctl.sh
-source scripts/hosts.sh
-source scripts/perm.sh
-source scripts/banners.sh
-source scripts/sudo.sh
-source scripts/process.sh
-source scripts/php.sh
 source scripts/apache.sh
-source scripts/vsftpd.sh
-source scripts/ssh.sh
-source scripts/nginx.sh
+source scripts/apt.sh
+source scripts/audit.sh
+source scripts/banners.sh
+source scripts/cron.sh
+source scripts/filemgt.sh
+source scripts/hosts.sh
+source scripts/malware.sh
 source scripts/mysql.sh
-source scripts/samba.sh
+source scripts/nginx.sh
+source scripts/perm.sh
+source scripts/process.sh
 source scripts/pureftpd.sh
 source scripts/purge.sh
-source scripts/malware.sh
-source scripts/filemgt.sh
-source scripts/apparmor.sh
-source scripts/cron.sh
-source scripts/audit.sh
+source scripts/samba.sh
+source scripts/ssh.sh
+source scripts/sudo.sh
+source scripts/sysctl.sh
+source scripts/ufw.sh
+source scripts/users.sh
+source scripts/vsftpd.sh
 
 clear
 echo "Ubuntu Hardening Script v.1.0.3 for Ubuntu 14.04 and 16.04"
@@ -117,9 +119,6 @@ read -p "Harden mysql databases? (y/N) >> " -n 1 -r input_mysql
 echo
 clear
 read -p "Configure cron? (y/N) >> " -n 1 -r input_cron
-echo
-clear
-read -p "Configure apparmor? (y/N) >> " -n 1 -r input_apparmor
 echo
 clear
 read -p "Configure audit? (y/N) >> " -n 1 -r input_caudit
@@ -236,7 +235,7 @@ echo
 
 if [[ $input_apt =~ ^[Yy]$ ]]
 then
-    echo "Configuring apt... \r"
+    echo "Configuring apt... "
     f_apt
     echo -e "[COMPLETE]"
 fi
@@ -263,7 +262,7 @@ echo
 
 if [[ $input_hosts =~ ^[Yy]$ ]]
 then
-    echo "Configuring hosts file... \r"
+    echo "Configuring hosts file... "
     f_hosts
     echo -e "[COMPLETE]"
 fi
@@ -272,7 +271,7 @@ echo
 
 if [[ $input_files =~ ^[Yy]$ ]]
 then
-    echo "Removing media files... \r"
+    echo "Removing media files... "
     f_filemgt
     echo -e "[COMPLETE]"
 fi
@@ -281,7 +280,7 @@ echo
 
 if [[ $input_sysctl =~ ^[Yy]$ ]]
 then
-    echo "Configuring network settings... \r"
+    echo "Configuring network settings... "
     f_sysctl
     echo -e "[COMPLETE]"
 fi
@@ -290,7 +289,7 @@ echo
 
 if [[ $input_banners =~ ^[Yy]$ ]]
 then
-    echo "Configuring banners... \r"
+    echo "Configuring banners... "
     f_banners
     echo "[COMPLETE]"
 fi
@@ -299,7 +298,7 @@ echo
 
 if [[ $input_sudo =~ ^[Yy]$ ]]
 then
-    echo "Configuring sudo... \r"
+    echo "Configuring sudo... "
     f_sudo
     echo "[COMPLETE]"
 fi
@@ -308,7 +307,7 @@ echo
 
 if [[ $input_processes =~ ^[Yy]$ ]]
 then
-    echo "Hardening processes... \r"
+    echo "Hardening processes... "
     f_process
     echo "[COMPLETE]"
 fi
@@ -317,7 +316,7 @@ echo
 
 if [[ $input_aide =~ ^[Yy]$ ]]
 then
-    echo "Configuring aide... \r"
+    echo "Configuring aide... "
     f_aide
     echo "[COMPLETE]"
 fi
@@ -326,7 +325,7 @@ echo
 
 if [[ $input_perm =~ ^[Yy]$ ]]
 then
-    echo "Configuring permissions... \r"
+    echo "Configuring permissions... "
     f_perm
     echo "[COMPLETE]"
 fi
@@ -335,7 +334,7 @@ echo
 
 if [[ $input_malware =~ ^[Yy]$ ]]
 then
-    echo "Removing potential malware... \r"
+    echo "Removing potential malware... "
     f_malware
     echo "[COMPLETE]"
 fi
@@ -344,7 +343,7 @@ echo
 
 if [[ $input_purge =~ ^[Yy]$ ]]
 then
-    echo "Purging non-server applications... \r"
+    echo "Purging non-server applications... "
     f_purge
     echo "[COMPLETE]"
 fi
@@ -353,7 +352,7 @@ echo
 
 if [[ $input_mysql =~ ^[Yy]$ ]]
 then
-    echo "Configuring mysql databases... \r"
+    echo "Configuring mysql databases... "
     f_mysql
 
     if [[ $version =~ .*14.04* ]]
@@ -376,7 +375,7 @@ echo
 
 if [[ $CRITICALSERVICES =~ .*ssh.* ]]
 then
-    echo "Configuring ssh... \r"
+    echo "Configuring ssh... "
     f_ssh
 
     if [[ $version =~ .*14.04* ]]
@@ -401,7 +400,7 @@ echo
 
 if [[ $CRITICALSERVICES =~ .*vsftpd.* ]]
 then
-    echo "Configuring vsftpd... \r"
+    echo "Configuring vsftpd... "
     f_vsftpd
 
     if [[ $version =~ .*14.04* ]]
@@ -423,7 +422,7 @@ echo
 
 if [[ $CRITICALSERVICES =~ .*nginx.* ]]
 then
-    echo "Configuring nginx... \r"
+    echo "Configuring nginx... "
     f_nginx
 
     if [[ $version =~ .*14.04* ]]
@@ -445,7 +444,7 @@ echo
 
 if [[ $CRITICALSERVICES =~ .*samba.* ]]
 then
-    echo "Configuring samba... \r"
+    echo "Configuring samba... "
     f_samba
 
     if [[ $version =~ .*14.04* ]]
@@ -465,7 +464,7 @@ fi
 
 if [[ $CRITICALSERVICES =~ .*pureftpd.* ]]
 then
-    echo "Configuring pureftpd... \r"
+    echo "Configuring pureftpd... "
     f_pureftpd
 
     if [[ $version =~ .*14.04* ]]
@@ -483,42 +482,19 @@ then
     echo "[COMPLETE]"
 fi
 
-if [[ $input_apparmor =~ ^[Yy]$ ]]
-then
-    echo "Configuring apparmor... \r"
-    f_apparmor
-
-    if [[ $version =~ .*14.04* ]]
-    then
-        sudo service apparmor stop
-        sudo service apparmor start
-    else
-        if [[ $version =~ .*16.04* ]]
-        then
-            sudo systemctl enable apparmor.service
-            sudo systemctl reload-or-restart apparmor.service
-        fi
-    fi
-
-    echo "[COMPLETE]"
-fi
-
 if [[ $input_cron =~ ^[Yy]$ ]]
 then
-    echo "Configuring cron... \r"
+    echo "Configuring cron... "
     f_cron
     echo "[COMPLETE]"
 fi
 
 if [[ $input_audit =~ ^[Yy]$ ]]
 then
-    echo "Configuring audit... \r"
+    echo "Configuring audit... "
     f_audit
     echo "[COMPLETE]"
 fi
-
-
-
 
 echo "Ubuntu Hardening Script finished!"
 echo "Press any button to exit."
