@@ -146,7 +146,7 @@ else
         echo
         if [[ $deletionConfirmation =~ ^[Yy]$ ]]
         then
-            apt-get purge openssh-server -y > /dev/null 2>&1
+            apt-get purge openssh-server -y
             echo "SSH has been purged."
         fi
     fi
@@ -166,7 +166,7 @@ else
         echo
         if [[ $deletionConfirmation =~ ^[Yy]$ ]]
         then
-            apt-get purge vsftpd -y > /dev/null 2>&1
+            apt-get purge vsftpd -y
             echo "vsFTPd has been purged."
         fi
     fi
@@ -186,7 +186,7 @@ else
         echo
         if [[ $deletionConfirmation =~ ^[Yy]$ ]]
         then
-            apt-get purge samba -y > /dev/null 2>&1
+            apt-get purge samba -y
             echo "Samba has been purged."
         fi
     fi
@@ -206,7 +206,7 @@ else
         echo
         if [[ $deletionConfirmation =~ ^[Yy]$ ]]
         then
-            apt-get purge nginx -y > /dev/null 2>&1
+            apt-get purge nginx -y
             echo "Nginx has been purged."
         fi
     fi
@@ -226,7 +226,7 @@ else
         echo
         if [[ $deletionConfirmation =~ ^[Yy]$ ]]
         then
-            apt-get purge pure-ftpd -y > /dev/null 2>&1
+            apt-get purge pure-ftpd -y
             echo "pureftpd has been purged."
         fi
     fi
@@ -236,9 +236,9 @@ echo
 
 if [[ $input_apt =~ ^[Yy]$ ]]
 then
-    echo -ne "Configuring apt... \r"
-    f_apt > /dev/null 2>&1
-    echo -e "Configuring apt... [COMPLETE]"
+    echo "Configuring apt... \r"
+    f_apt
+    echo -e "[COMPLETE]"
 fi
 
 echo
@@ -247,7 +247,7 @@ if [[ $input_firewall =~ ^[Yy]$ ]]
 then
     echo "Configuring ufw... "
     f_ufw
-    echo "Configuring ufw... [COMPLETE]"
+    echo "[COMPLETE]"
 fi
 
 echo
@@ -256,105 +256,105 @@ if [[ $input_users =~ ^[Yy]$ ]]
 then
     echo "Configuring account settings... "
     f_users
-    echo "Configuring account settings... [COMPLETE]"
+    echo "[COMPLETE]"
 fi
 
 echo
 
 if [[ $input_hosts =~ ^[Yy]$ ]]
 then
-    echo -ne "Configuring hosts file... \r"
-    f_hosts > /dev/null 2>&1
-    echo -e "Configuring hosts file... [COMPLETE]"
+    echo "Configuring hosts file... \r"
+    f_hosts
+    echo -e "[COMPLETE]"
 fi
 
 echo
 
 if [[ $input_files =~ ^[Yy]$ ]]
 then
-    echo -ne "Removing media files... \r"
-    f_filemgt > /dev/null 2>&1
-    echo -e "Removing media files... [COMPLETE]"
+    echo "Removing media files... \r"
+    f_filemgt
+    echo -e "[COMPLETE]"
 fi
 
 echo
 
 if [[ $input_sysctl =~ ^[Yy]$ ]]
 then
-    echo -ne "Configuring network settings... \r"
-    f_sysctl > /dev/null 2>&1
-    echo -e "Configuring network settings... [COMPLETE]"
+    echo "Configuring network settings... \r"
+    f_sysctl
+    echo -e "[COMPLETE]"
 fi
 
 echo
 
 if [[ $input_banners =~ ^[Yy]$ ]]
 then
-    echo -ne "Configuring banners... \r"
-    f_banners > /dev/null 2>&1
-    echo -n "Configuring banners... [COMPLETE]"
+    echo "Configuring banners... \r"
+    f_banners
+    echo "[COMPLETE]"
 fi
 
 echo
 
 if [[ $input_sudo =~ ^[Yy]$ ]]
 then
-    echo -ne "Configuring sudo... \r"
-    f_sudo > /dev/null 2>&1
-    echo -n "Configuring sudo... [COMPLETE]"
+    echo "Configuring sudo... \r"
+    f_sudo
+    echo "[COMPLETE]"
 fi
 
 echo
 
 if [[ $input_processes =~ ^[Yy]$ ]]
 then
-    echo -ne "Hardening processes... \r"
-    f_process > /dev/null 2>&1
-    echo -n "Hardening processes... [COMPLETE]"
+    echo "Hardening processes... \r"
+    f_process
+    echo "[COMPLETE]"
 fi
 
 echo
 
 if [[ $input_aide =~ ^[Yy]$ ]]
 then
-    echo -ne "Configuring aide... \r"
-    f_aide > /dev/null 2>&1
-    echo -n "Configuring aide... [COMPLETE]"
+    echo "Configuring aide... \r"
+    f_aide
+    echo "[COMPLETE]"
 fi
 
 echo
 
 if [[ $input_perm =~ ^[Yy]$ ]]
 then
-    echo -ne "Configuring permissions... \r"
-    f_perm > /dev/null 2>&1
-    echo -n "Configuring permissions... [COMPLETE]"
+    echo "Configuring permissions... \r"
+    f_perm
+    echo "[COMPLETE]"
 fi
 
 echo
 
 if [[ $input_malware =~ ^[Yy]$ ]]
 then
-    echo -ne "Removing potential malware... \r"
-    f_malware > /dev/null 2>&1
-    echo -n "Removing potential malware... [COMPLETE]"
+    echo "Removing potential malware... \r"
+    f_malware
+    echo "[COMPLETE]"
 fi
 
 echo
 
 if [[ $input_purge =~ ^[Yy]$ ]]
 then
-    echo -ne "Purging non-server applications... \r"
-    f_purge > /dev/null 2>&1
-    echo -n "Purging non-server applications... [COMPLETE]"
+    echo "Purging non-server applications... \r"
+    f_purge
+    echo "[COMPLETE]"
 fi
 
 echo
 
 if [[ $input_mysql =~ ^[Yy]$ ]]
 then
-    echo -ne "Configuring mysql databases... \r"
-    f_mysql > /dev/null 2>&1
+    echo "Configuring mysql databases... \r"
+    f_mysql
 
     if [[ $version =~ .*14.04* ]]
     then
@@ -368,7 +368,7 @@ then
         fi
     fi
 
-    echo -n "Configuring mysql databases... [COMPLETE]"
+    echo "[COMPLETE]"
 
 fi
 
@@ -376,8 +376,8 @@ echo
 
 if [[ $CRITICALSERVICES =~ .*ssh.* ]]
 then
-    echo -ne "Configuring ssh... \r"
-    f_ssh > /dev/null 2>&1
+    echo "Configuring ssh... \r"
+    f_ssh
 
     if [[ $version =~ .*14.04* ]]
     then
@@ -393,7 +393,7 @@ then
         fi
     fi
 
-    echo -n "Configuring ssh... [COMPLETE]"
+    echo "[COMPLETE]"
     
 fi
 
@@ -401,8 +401,8 @@ echo
 
 if [[ $CRITICALSERVICES =~ .*vsftpd.* ]]
 then
-    echo -ne "Configuring vsftpd... \r"
-    f_vsftpd > /dev/null 2>&1
+    echo "Configuring vsftpd... \r"
+    f_vsftpd
 
     if [[ $version =~ .*14.04* ]]
     then
@@ -416,15 +416,15 @@ then
         fi
     fi
 
-    echo -n "Configuring vsftpd... [COMPLETE]"
+    echo " [COMPLETE]"
 fi
 
 echo
 
 if [[ $CRITICALSERVICES =~ .*nginx.* ]]
 then
-    echo -ne "Configuring nginx... \r"
-    f_nginx > /dev/null 2>&1
+    echo "Configuring nginx... \r"
+    f_nginx
 
     if [[ $version =~ .*14.04* ]]
     then
@@ -438,15 +438,15 @@ then
         fi
     fi
 
-    echo -n "Configuring nginx... [COMPLETE]"
+    echo "[COMPLETE]"
 fi
 
 echo
 
 if [[ $CRITICALSERVICES =~ .*samba.* ]]
 then
-    echo -ne "Configuring samba... \r"
-    f_samba > /dev/null 2>&1
+    echo "Configuring samba... \r"
+    f_samba
 
     if [[ $version =~ .*14.04* ]]
     then
@@ -460,13 +460,13 @@ then
         fi
     fi
 
-    echo -n "Configuring samba... [COMPLETE]"
+    echo "[COMPLETE]"
 fi
 
 if [[ $CRITICALSERVICES =~ .*pureftpd.* ]]
 then
-    echo -ne "Configuring pureftpd... \r"
-    f_pureftpd > /dev/null 2>&1
+    echo "Configuring pureftpd... \r"
+    f_pureftpd
 
     if [[ $version =~ .*14.04* ]]
     then
@@ -480,13 +480,13 @@ then
         fi
     fi
 
-    echo -n "Configuring pureftpd... [COMPLETE]"
+    echo "[COMPLETE]"
 fi
 
 if [[ $input_apparmor =~ ^[Yy]$ ]]
 then
-    echo -ne "Configuring apparmor... \r"
-    f_apparmor > /dev/null 2>&1
+    echo "Configuring apparmor... \r"
+    f_apparmor
 
     if [[ $version =~ .*14.04* ]]
     then
@@ -500,26 +500,26 @@ then
         fi
     fi
 
-    echo -n "Configuring apparmor... [COMPLETE]"
+    echo "[COMPLETE]"
 fi
 
 if [[ $input_cron =~ ^[Yy]$ ]]
 then
-    echo -ne "Configuring cron... \r"
-    f_cron > /dev/null 2>&1
-    echo -n "Configuring cron... [COMPLETE]"
+    echo "Configuring cron... \r"
+    f_cron
+    echo "[COMPLETE]"
 fi
 
 if [[ $input_audit =~ ^[Yy]$ ]]
 then
-    echo -ne "Configuring audit... \r"
-    f_audit > /dev/null 2>&1
-    echo -n "Configuring audit... [COMPLETE]"
+    echo "Configuring audit... \r"
+    f_audit
+    echo "[COMPLETE]"
 fi
 
 
 
 
 echo "Ubuntu Hardening Script finished!"
-echo -n "Press any button to exit."
+echo "Press any button to exit."
 echo
