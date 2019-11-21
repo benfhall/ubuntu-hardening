@@ -94,6 +94,8 @@ function f_audit {
     else
         echo '-a always,exit -F arch=b32 -S init_module -S delete_module -k modules'  >> /etc/audit/audit.rules
     fi
+    
+    systemctl enable rsyslog
 
     auditctl -e 1
 
