@@ -94,6 +94,24 @@ function f_users {
       passwd -l $u
     fi
   done
+  
+  uid0=$(awk -F: '($3=="0"){print}' /etc/passwd | cut -d: -f 1)
+  
+  for user in $uid0
+  do
+	  if [[ $user =~ .*root.* ]]
+	  then
+		  echo "Detected regular root account with uid 0"
+	  else
+		  echo "$user has uid of 0"
+      read -p "Delete $user? (y/N) >> " -n 1 -r deleteUID0
+      echo
+      if [[ $deleteUID0 =~ ^[Yy]$ ]]
+		  then
+			  userdel -r -f $user
+		  fi
+    fi
+done
 
   echo "[COMPLETE]"
 
