@@ -27,6 +27,7 @@ source scripts/perm.sh
 source scripts/process.sh
 source scripts/pureftpd.sh
 source scripts/purge.sh
+source scripts/rkhunter.sh
 source scripts/samba.sh
 source scripts/ssh.sh
 source scripts/sudo.sh
@@ -101,6 +102,9 @@ read -p "Edit banners? (y/N) >> " -n 1 -r input_banners
 echo
 clear
 read -p "Configure sudo? (y/N) >> " -n 1 -r input_sudo
+echo
+clear
+read -p "Install and run rkhunter? (y/N) >> " -n 1 -r input_rkhunter
 echo
 clear
 read -p "Harden processes? (y/N) >> " -n 1 -r input_processes
@@ -314,10 +318,10 @@ fi
 
 echo
 
-if [[ $input_aide =~ ^[Yy]$ ]]
+if [[ $input_rkhunter =~ ^[Yy]$ ]]
 then
-    echo "Configuring aide... "
-    f_aide
+    echo "Installing and running rkhunter... "
+    f_rkhunter
     echo "[COMPLETE]"
 fi
 
