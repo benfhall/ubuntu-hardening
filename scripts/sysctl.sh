@@ -1,5 +1,7 @@
 function f_sysctl {
 
+  apt-get install tcpd -y
+
   # Controls IP packet forwarding
   sysctl -w net.ipv4.ip_forward=0
 
