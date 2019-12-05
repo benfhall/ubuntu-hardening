@@ -69,6 +69,8 @@ function f_sysctl {
 
   # How many global unicast IPv6 addresses can be assigned to each interface?
   sysctl -w net.ipv6.conf.default.max_addresses=1
+  
+  sysctl -w kernel.randomize_va_space=2
 
   sysctl -p
 
