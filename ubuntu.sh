@@ -31,6 +31,7 @@ source scripts/sysctl.sh
 source scripts/ufw.sh
 source scripts/users.sh
 source scripts/vsftpd.sh
+source scripts/php.sh
 
 clear
 echo "Ubuntu Hardening Script v.1.0.3 for Ubuntu 14.04 and 16.04"
@@ -121,7 +122,10 @@ clear
 read -p "Configure cron? (y/N) >> " -n 1 -r input_cron
 echo
 clear
-read -p "Configure audit? (y/N) >> " -n 1 -r input_caudit
+read -p "Configure audit? (y/N) >> " -n 1 -r input_audit
+echo
+clear
+read -p "Configure php? (y/N) >> " -n 1 -r input_php
 echo
 clear
 read -p "Harden critical services? (y/N) >> " -n 1 -r input_services
@@ -346,6 +350,29 @@ then
     echo "Purging non-server applications... "
     f_purge
     echo "[COMPLETE]"
+fi
+
+echo
+
+if [[ $input_php =~ ^[Yy]$ ]]
+then
+    echo "Configuring apache2 php module... "
+    f_php
+
+    if [[ $version =~ .*14.04* ]]
+    then
+        sudo service apache2 stop
+        sudo service apache2 start
+    else
+        if [[ $version =~ .*16.04* ]]
+        then
+            sudo systemctl enable apache2.service
+            sudo systemctl reload-or-restart apache2.service
+        fi
+    fi
+
+    echo "[COMPLETE]"
+
 fi
 
 echo
