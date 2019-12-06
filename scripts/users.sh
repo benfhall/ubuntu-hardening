@@ -4,8 +4,8 @@ function f_users {
 
   apt-get install libpam-cracklib -y
 
-  mv /etc/login.defs  /etc/pam.d/login.defs.old
-  mv defaults/login.defs /etc/pam.d/login.defs
+  mv /etc/login.defs  /etc/login.defs.old
+  mv defaults/login.defs /etc/login.defs
 
   mv /etc/pam.d/common-password  /etc/pam.d/common-password.old
   mv defaults/common-password /etc/pam.d/common-password
