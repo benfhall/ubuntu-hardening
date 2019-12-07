@@ -20,6 +20,8 @@ source scripts/malware.sh
 source scripts/mysql.sh
 source scripts/nginx.sh
 source scripts/perm.sh
+source scripts/php.sh
+source scripts/postfix.sh
 source scripts/process.sh
 source scripts/pureftpd.sh
 source scripts/purge.sh
@@ -31,7 +33,6 @@ source scripts/sysctl.sh
 source scripts/ufw.sh
 source scripts/users.sh
 source scripts/vsftpd.sh
-source scripts/php.sh
 
 clear
 echo "Ubuntu Hardening Script v.1.0.3 for Ubuntu 14.04 and 16.04"
@@ -123,6 +124,9 @@ read -p "Configure cron? (y/N) >> " -n 1 -r input_cron
 echo
 clear
 read -p "Configure audit? (y/N) >> " -n 1 -r input_audit
+echo
+clear
+read -p "Configure postfix? (y/N) >> " -n 1 -r input_postfix
 echo
 clear
 read -p "Configure php? (y/N) >> " -n 1 -r input_php
@@ -349,6 +353,15 @@ if [[ $input_purge =~ ^[Yy]$ ]]
 then
     echo "Purging non-server applications... "
     f_purge
+    echo "[COMPLETE]"
+fi
+
+echo
+
+if [[ $input_postfix =~ ^[Yy]$ ]]
+then
+    echo "Configuring postfix... "
+    f_postfix
     echo "[COMPLETE]"
 fi
 
