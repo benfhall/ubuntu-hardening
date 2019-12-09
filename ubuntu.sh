@@ -181,6 +181,26 @@ fi
 
 echo
 
+if [[ $criticalServices =~ .*proftpd.* ]]
+then
+    echo "proFTPd is identified as a critical service and will not be uninstalled"
+else
+    if [[ $(apt-cache policy proftpd) =~ .*"Installed: (none)".* ]]
+    then
+        echo "proFTPd is not currently installed and is not a critical service."
+    else
+        read -p "Remove proFTPd? (y/N) >> " -n 1 -r deletionConfirmation
+        echo
+        if [[ $deletionConfirmation =~ ^[Yy]$ ]]
+        then
+            apt-get purge proftpd -y
+            echo "proFTPd has been purged."
+        fi
+    fi
+fi
+
+echo
+
 if [[ $criticalServices =~ .*samba.* ]]
 then
     echo "Samba is identified as a critical service and will not be uninstalled"
